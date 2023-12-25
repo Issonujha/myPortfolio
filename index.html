@@ -1,12 +1,121 @@
-<html>
-  <head>
-    <title> Access Blocked </title>
-  </head>
-  <body>
-    <h1>Access Blocked</h1>
-    <p>You are not allowed to access these resources without proper authentication.</p>
-    <p> 
-      Unauthorized response status code (Error status 401).
-    </p>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> My Portfolio : Sonu Kumar Jha </title>
+  <link rel="icon" href="./resources/images/profile.png" type="image/x-icon">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./resources/css/my_style.css">
+
+</head>
+
+<body>
+  <header>
+    <!-- MENU -->
+    <nav class="navbar navbar-expand-sm navbar-light">
+      <div class="container" style="background-color: beige; border-radius: 10px; height: 60px;">
+        <a class="navbar-brand" href="./index.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+            viewBox="0 0 24 24">
+            <path fill="currentColor"
+              d="M15.71 12.71a6 6 0 1 0-7.42 0a10 10 0 0 0-6.22 8.18a1 1 0 0 0 2 .22a8 8 0 0 1 15.9 0a1 1 0 0 0 1 .89h.11a1 1 0 0 0 .88-1.1a10 10 0 0 0-6.25-8.19M12 12a4 4 0 1 1 4-4a4 4 0 0 1-4 4" />
+          </svg> Sonu Jha</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+              <a href="./about.html" class="nav-link"><span data-hover="About">About</span></a>
+            </li>
+            <li class="nav-item">
+              <a href="#project" class="nav-link"><span data-hover="Projects">Projects</span></a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Profiles
+              </a>
+              <ul class="dropdown-menu" style="background-color: cadetblue; border-radius: 7px;">
+                <li><a class="dropdown-item" href="#">Linked In</a></li>
+                <li><a class="dropdown-item" href="#">Naukri</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <!-- <li><a class="dropdown-item" href="#"></a></li> -->
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="#contact" class="nav-link"><span data-hover="Contact">Contact</span></a>
+            </li>
+            <li class="nav-item"
+              style="background-color: blue; width: auto; border: none; border-radius: 10px; height: 40px;">
+              <a href="#resume" class="nav-link"><span data-hover="Resume" style="color: white;">Resume</span></a>
+            </li>
+          </ul>
+
+          <ul class="navbar-nav ml-lg-auto">
+            <button id="dark-mode-toggle">
+              <div class="ml-lg-4">
+                <div class="color-mode d-lg-flex justify-content-center align-items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <defs>
+                      <mask id="lineMdLightDark0">
+                        <circle cx="7.5" cy="7.5" r="5.5" fill="#fff" />
+                        <circle cx="7.5" cy="7.5" r="5.5">
+                          <animate fill="freeze" attributeName="cx" dur="0.4s" values="7.5;11" />
+                          <animate fill="freeze" attributeName="r" dur="0.4s" values="5.5;6.5" />
+                        </circle>
+                      </mask>
+                      <mask id="lineMdLightDark1">
+                        <g fill="#fff">
+                          <circle cx="12" cy="9" r="5.5">
+                            <animate fill="freeze" attributeName="cy" begin="1s" dur="0.5s" values="9;15" />
+                          </circle>
+                          <g fill-opacity="0">
+                            <use href="#lineMdLightDark2" transform="rotate(-75 12 15)" />
+                            <use href="#lineMdLightDark2" transform="rotate(-25 12 15)" />
+                            <use href="#lineMdLightDark2" transform="rotate(25 12 15)" />
+                            <use href="#lineMdLightDark2" transform="rotate(75 12 15)" />
+                            <set attributeName="fill-opacity" begin="1.5s" to="1" />
+                          </g>
+                        </g>
+                        <path d="M0 10h26v5h-26z" />
+                        <path fill="none" stroke="#fff" stroke-dasharray="26" stroke-dashoffset="26"
+                          stroke-linecap="round" stroke-width="2" d="M1 12h22">
+                          <animate fill="freeze" attributeName="stroke-dashoffset" begin="0.5s" dur="0.4s"
+                            values="26;52" />
+                        </path>
+                      </mask>
+                      <symbol id="lineMdLightDark2">
+                        <path d="M0 0">
+                          <animate fill="freeze" attributeName="d" begin="1.5s" dur="0.4s"
+                            values="M11 18h2L12 20z;M10.5 21.5h3L12 24z" />
+                        </path>
+                      </symbol>
+                    </defs>
+                    <g fill="currentColor">
+                      <rect width="13" height="13" x="1" y="1" mask="url(#lineMdLightDark0)" />
+                      <path d="M-2 11h28v13h-28z" mask="url(#lineMdLightDark1)" transform="rotate(-45 12 12)" />
+                    </g>
+                  </svg>
+                </div>
+              </div>
+            </button>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <script src="./resources/js/my_js.js"></script>
+</body>
+
 </html>
