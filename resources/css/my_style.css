@@ -14,7 +14,90 @@ header.dark-mode {
     color: #fff;
 }
 
+div.dark-mode {
+    background-color: #555;
+    color: #fff;
+}
+
 .my_dark_mode {
     border: none;
     border-radius: none;
+}
+
+.profile_page {
+    width: 30%;
+    height: 35%;
+    border-radius: 10%;
+}
+
+
+.profile_handler {
+    margin: 3% 20%;
+}
+
+.profile_internal_handler {
+    
+}
+
+.profile_text {
+    font-family: 'Pacifico', serif;
+    font-size: 50px;
+    margin-left: 20%;
+}
+
+
+
+@media all and (min-device-width: 100px) {
+    .profile_text {
+        font-size: 10px;
+    }
+}
+
+@media all and (min-device-width: 400px) {
+    .profile_text {
+        font-size: 12px;
+    }
+}
+
+@media all and (min-device-width: 590px) {
+    .profile_text {
+        font-size: 18px;
+    }
+}
+
+@media all and (min-device-width: 775px){
+    .profile_text {
+        font-size: 24px;
+    }
+}
+
+@media all and (min-device-width: 1000px){
+    .profile_text {
+        font-size: 33px;
+    }
+}
+
+@media all and (min-device-width: 2000px){
+    .profile_text {
+        font-size: 70px;
+    }
+}
+
+
+.collection_topic {
+    margin: 0px 5%;
+}
+
+.main_topic {
+    background-color: wheat;
+    border-radius: 10px;
+}
+
+.my_projects {
+    width: 100%;
+}
+
+.border {
+    border: 7px black;
+    border-radius: 5px;
 }

@@ -12,12 +12,14 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./resources/css/my_style.css">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 </head>
 
 <body>
+    <!-- Header Starts -->
     <header>
-        <!-- MENU -->
         <nav class="navbar navbar-expand-sm navbar-light">
             <div class="container" style="background-color: beige; border-radius: 10px; height: 60px;">
                 <a class="navbar-brand" href="./index.html"><svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -121,6 +123,84 @@
             </div>
         </nav>
     </header>
+    <!-- Header Ends -->
+    <div class="profile">
+        <div class="profile_handler">
+            <span class="profile_internal_handler">
+                <img src="./resources/images/profile_photo.jpeg" alt="sonu_jha_background" class="profile_page" />
+            </span>
+            <span class="d-inline-block profile_text" tabindex="0" data-toggle="tooltip" title="Sonu Jha">
+                It's me, <button class="btn btn-primary"
+                    style="pointer-events: none; width: 80%; background-color: gray; border: none;" type="button"
+                    disabled>
+                    <span class="profile_text"> Sonu Jha! </span></button>
+            </span>
+        </div>
+    </div>
+    <hr style="width:100px; margin: auto; margin-bottom: 10px;" />
+
+    <main>
+        <!-- Here is Details of my profile -->
+        <div>
+            <div class="collection_topic">
+                <div class="main_topic">
+                    <h3 class="text-center">About Us</h3>
+                </div>
+                <div class="description text-center">
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquam, quidem illo? Eaque, dolor.
+                        Quis obcaecati nemo temporibus facere, atque fugit voluptatum vel. Placeat, in ducimus nesciunt
+                        odio, quo natus dolore cum facilis distinctio quam ut consectetur ipsa autem voluptate eos id!
+                        Placeat reprehenderit repudiandae, in minima voluptas distinctio. Itaque at quae praesentium,
+                        nam est atque? Recusandae molestiae molestias nemo odio labore facere nam libero placeat
+                        accusamus facilis eos fuga, quo, aliquid magni dolores error? Itaque repellendus nesciunt
+                        possimus asperiores non explicabo reiciendis tenetur eum! Totam quisquam nisi non quasi eos
+                        perspiciatis asperiores nobis,</p>
+                </div>
+            </div>
+            <div class="collection_topic">
+                <div class="main_topic">
+                    <h3 class="text-center">Projects</h3>
+                </div>
+                <center>
+                    <div class="row d-inline-block">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Rest API</h5>
+                                    <p class="card-text">Rest API Using Spring Boot and verified and observed in
+                                        postman.</p>
+                                    <div style="margin: 10px;">
+                                        <img src="./resources/images/rest_api.png" alt="Rest API">
+                                    </div>
+                                    <a href="https://github.com/Issonujha/restapi" target="_blank"
+                                        class="btn btn-primary">Search
+                                        Link</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row d-inline-block">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Selinium With Java</h5>
+                                    <p class="card-text">Selinium Project Using Java to Automate Our College Attendance.
+                                    </p>
+                                    <div style="margin: 10px;">
+                                        <img src="./resources/images/rest_api.png" alt="Selinium Project">
+                                    </div>
+                                    <a href="https://github.com/Issonujha/sleniumProject" target="_blank"
+                                        class="btn btn-primary">Search
+                                        Link</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </center>
+            </div>
+        </div>
+    </main>
+
     <script src="./resources/js/my_js.js"></script>
 </body>
 
