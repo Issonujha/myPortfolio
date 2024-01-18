@@ -1,0 +1,205 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link rel="icon" href="./resources/images/profile.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./resources/css/my_style.css">
+</head>
+
+<body>
+
+    <!-- Header Starts -->
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-light">
+            <div class="container" style="background-color: beige; border-radius: 10px; height: 60px;">
+                <a class="navbar-brand" href="./index.html"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                        height="24" viewBox="0 0 24 24">
+                        <path fill="currentColor"
+                            d="M15.71 12.71a6 6 0 1 0-7.42 0a10 10 0 0 0-6.22 8.18a1 1 0 0 0 2 .22a8 8 0 0 1 15.9 0a1 1 0 0 0 1 .89h.11a1 1 0 0 0 .88-1.1a10 10 0 0 0-6.25-8.19M12 12a4 4 0 1 1 4-4a4 4 0 0 1-4 4" />
+                    </svg> Sonu Jha</a>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a href="./about.html" class="nav-link"><span data-hover="About">About</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#project" class="nav-link"><span data-hover="Projects">Projects</span></a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Profiles
+                            </a>
+                            <ul class="dropdown-menu" style="background-color: cadetblue; border-radius: 7px;">
+                                <li><a class="dropdown-item" href="#">Linked In</a></li>
+                                <li><a class="dropdown-item" href="#">Naukri</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <!-- <li><a class="dropdown-item" href="#"></a></li> -->
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="./contact.html" class="nav-link"><span data-hover="Contact">Contact</span></a>
+                        </li>
+                        <li class="nav-item"
+                            style="background-color: blue; width: auto; border: none; border-radius: 10px; height: 40px;">
+                            <a href="#resume" class="nav-link"><span data-hover="Resume"
+                                    style="color: white;">Resume</span></a>
+                        </li>
+                    </ul>
+
+                    <ul class="navbar-nav ml-lg-auto">
+                        <button id="dark-mode-toggle" class="my_dark_mode">
+                            <div class="ml-lg-4">
+                                <div class="color-mode d-lg-flex justify-content-center align-items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                        <defs>
+                                            <mask id="lineMdLightDark0">
+                                                <circle cx="7.5" cy="7.5" r="5.5" fill="#fff" />
+                                                <circle cx="7.5" cy="7.5" r="5.5">
+                                                    <animate fill="freeze" attributeName="cx" dur="0.4s"
+                                                        values="7.5;11" />
+                                                    <animate fill="freeze" attributeName="r" dur="0.4s"
+                                                        values="5.5;6.5" />
+                                                </circle>
+                                            </mask>
+                                            <mask id="lineMdLightDark1">
+                                                <g fill="#fff">
+                                                    <circle cx="12" cy="9" r="5.5">
+                                                        <animate fill="freeze" attributeName="cy" begin="1s" dur="0.5s"
+                                                            values="9;15" />
+                                                    </circle>
+                                                    <g fill-opacity="0">
+                                                        <use href="#lineMdLightDark2" transform="rotate(-75 12 15)" />
+                                                        <use href="#lineMdLightDark2" transform="rotate(-25 12 15)" />
+                                                        <use href="#lineMdLightDark2" transform="rotate(25 12 15)" />
+                                                        <use href="#lineMdLightDark2" transform="rotate(75 12 15)" />
+                                                        <set attributeName="fill-opacity" begin="1.5s" to="1" />
+                                                    </g>
+                                                </g>
+                                                <path d="M0 10h26v5h-26z" />
+                                                <path fill="none" stroke="#fff" stroke-dasharray="26"
+                                                    stroke-dashoffset="26" stroke-linecap="round" stroke-width="2"
+                                                    d="M1 12h22">
+                                                    <animate fill="freeze" attributeName="stroke-dashoffset"
+                                                        begin="0.5s" dur="0.4s" values="26;52" />
+                                                </path>
+                                            </mask>
+                                            <symbol id="lineMdLightDark2">
+                                                <path d="M0 0">
+                                                    <animate fill="freeze" attributeName="d" begin="1.5s" dur="0.4s"
+                                                        values="M11 18h2L12 20z;M10.5 21.5h3L12 24z" />
+                                                </path>
+                                            </symbol>
+                                        </defs>
+                                        <g fill="currentColor">
+                                            <rect width="13" height="13" x="1" y="1" mask="url(#lineMdLightDark0)" />
+                                            <path d="M-2 11h28v13h-28z" mask="url(#lineMdLightDark1)"
+                                                transform="rotate(-45 12 12)" />
+                                        </g>
+                                    </svg>
+                                </div>
+                            </div>
+                        </button>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- Header Ends -->
+
+
+
+    <div class="container">
+        <div class="header-content">
+            <span id="menu-icon" onClick="toggleMenu()"><img src="images/menu.svg" /></span>
+            <span id="header-right-menu">
+                <a href="#" class="header-active">Contact Us</a>
+            </span>
+        </div>
+        <div class="inner-container">
+            <div class="tile1">
+                <div class="tile1-heading">Get in touch</div>
+                <form>
+                    <div class="form-row">
+                        <input type="text" class="form-field" placeholder="Enter your name">
+                    </div>
+                    <div class="form-row">
+                        <input type="text" class="form-field" placeholder="Enter your email address">
+                    </div>
+                    <div class="form-row">
+                        <textarea class="form-field" placeholder="Go ahead we are listening..."></textarea>
+                    </div>
+                    <div class="form-row">
+                        <input type="button" class="form-field btn" value="Submit">
+                    </div>
+                </form>
+            </div>
+            <div class="tile2">
+                <div class="tile2-image">
+                    <img src="./resources/images/profile_photo.jpeg" style="border-radius: 10px; width: 70%;" />
+                </div>
+                <div>
+                    <div class="form-row">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="12"
+                            viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                            <path
+                                d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
+                        </svg>
+                        <span>Sector 59, Noida</span>
+                    </div>
+                    <div class="form-row">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16"
+                            viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                            <path
+                                d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z" />
+                        </svg>
+                        <span>+91 7546971006</span>
+                    </div>
+                    <div class="form-row">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 256 193">
+                            <path fill="#4285F4"
+                                d="M58.182 192.05V93.14L27.507 65.077L0 49.504v125.091c0 9.658 7.825 17.455 17.455 17.455z" />
+                            <path fill="#34A853"
+                                d="M197.818 192.05h40.727c9.659 0 17.455-7.826 17.455-17.455V49.505l-31.156 17.837l-27.026 25.798z" />
+                            <path fill="#EA4335"
+                                d="m58.182 93.14l-4.174-38.647l4.174-36.989L128 69.868l69.818-52.364l4.669 34.992l-4.669 40.644L128 145.504z" />
+                            <path fill="#FBBC04"
+                                d="M197.818 17.504V93.14L256 49.504V26.231c0-21.585-24.64-33.89-41.89-20.945z" />
+                            <path fill="#C5221F"
+                                d="m0 49.504l26.759 20.07L58.182 93.14V17.504L41.89 5.286C24.61-7.66 0 4.646 0 26.23z" />
+                        </svg>
+                        <span>sjha@gmail.com</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            var menuElement = document.getElementById("header-right-menu");
+            if (menuElement.style.display === "block") {
+                menuElement.style.display = "none";
+            } else {
+                menuElement.style.display = "block";
+            }
+        }
+    </script>
+
+</body>
+
+</html>
