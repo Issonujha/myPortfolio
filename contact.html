@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
     <link rel="stylesheet" href="./resources/css/my_style.css">
 </head>
 
@@ -133,18 +134,18 @@
         <div class="inner-container">
             <div class="tile1">
                 <div class="tile1-heading">Get in touch</div>
-                <form>
+                <form action="#" method="post">
                     <div class="form-row">
-                        <input type="text" class="form-field" placeholder="Enter your name">
+                        <input type="text" id="name" class="form-field" placeholder="Enter your name">
                     </div>
                     <div class="form-row">
-                        <input type="text" class="form-field" placeholder="Enter your email address">
+                        <input type="text" id="email" class="form-field" placeholder="Enter your email address">
                     </div>
                     <div class="form-row">
-                        <textarea class="form-field" placeholder="Go ahead we are listening..."></textarea>
+                        <textarea id="message" class="form-field" placeholder="Go ahead we are listening..."></textarea>
                     </div>
                     <div class="form-row">
-                        <input type="button" class="form-field btn" value="Submit">
+                        <input type="button" class="form-field btn" onclick="sendEmail()" value="Submit">
                     </div>
                 </form>
             </div>
@@ -182,7 +183,7 @@
                             <path fill="#C5221F"
                                 d="m0 49.504l26.759 20.07L58.182 93.14V17.504L41.89 5.286C24.61-7.66 0 4.646 0 26.23z" />
                         </svg>
-                        <span>sjha@gmail.com</span>
+                        <span>sjha9563@gmail.com</span>
                     </div>
                 </div>
             </div>
@@ -197,6 +198,23 @@
             } else {
                 menuElement.style.display = "block";
             }
+        }
+        function sendEmail() {
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("email").value;
+            let message = document.getElementById("message").value;
+            let finalmessage = `Name : ${name} <br>  Email : ${email} <br>  Message : ${message} <br>`;
+            Email.send({
+                Host: "smtp.elasticemail.com",
+                Username: "sjha9563@gmail.com",
+                Password: "51DB583B468ADE332A1A0C1D29DE527C118E",
+                To: 'sonujha281@yahoo.com',
+                From: "sjha9563@gmail.com",
+                Subject: "Mail from website",
+                Body: finalmessage
+            }).then(
+                message => alert(message)
+            );
         }
     </script>
 
