@@ -148,6 +148,7 @@
                         <input type="button" class="form-field btn" onclick="sendEmail()" value="Submit">
                     </div>
                 </form>
+                <div id="response"></div>
             </div>
             <div class="tile2">
                 <div class="tile2-image">
@@ -213,7 +214,7 @@
                 Subject: "Mail from website",
                 Body: finalmessage
             }).then(
-                message => alert(message)
+                message => document.getElementById("response").innerHTML = "Sent Successfully."
             );
         }
     </script>
