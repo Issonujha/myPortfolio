@@ -215,8 +215,9 @@
                 Subject: "Mail from website",
                 Body: finalmessage
             }).then(
-                message => document.getElementById("response").innerHTML = "<div style='background-color:green; text-align:center; text-color:white; border-radius:5px;'>Mail Sent Successfully</font>"
+                message => document.getElementById("response").innerHTML = "<div style='background-color:green; text-align:center; color:white; border-radius:5px;'>Mail Sent Successfully. (Reloding after 5 sec)</font>"
             );
+            setTimeout(function () { location.reload(true); }, 5000);
         }
     </script>
 
