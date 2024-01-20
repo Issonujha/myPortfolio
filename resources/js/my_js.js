@@ -44,3 +44,9 @@ function backColor() {
 }
 
 document.getElementById("nav-toog").addEventListener("click", backColor);
+function colapse() {
+    console.log("Collapse");
+    document.getElementById("navbarNav").classList.add('bg-color');
+    document.getElementById("navbarNav").classList.remove("show");
+}
+document.addEventListener("click", colapse);
