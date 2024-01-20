@@ -29,10 +29,17 @@ function backColor() {
     const isEnabled = document.getElementById("navbarNav").classList.contains('bg-color');
     if (isEnabled === true) {
         document.getElementById("navbarNav").classList.remove('bg-color');
+        if (document.getElementById("profile_btn") != null)
+            document.getElementById("profile_btn").classList.add('btn');
+        setTimeout('document.getElementById("nav-toog").setAttribute("disabled", "disabled")', 0);
     }
     else {
         document.getElementById("navbarNav").classList.add('bg-color');
+        if (document.getElementById("profile_btn") != null)
+            document.getElementById("profile_btn").classList.remove('btn');
+        setTimeout('document.getElementById("nav-toog").setAttribute("disabled", "disabled")', 0);
     }
+    setTimeout('document.getElementById("nav-toog").removeAttribute("disabled")', 400);
     console.log(isEnabled);
 }
 
