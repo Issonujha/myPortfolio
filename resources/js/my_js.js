@@ -29,34 +29,54 @@ function backColor() {
     const isEnabled = document.getElementById("navbarNav").classList.contains('bg-color');
     if (isEnabled === true) {
         document.getElementById("navbarNav").classList.remove('bg-color');
-        setTimeout('document.getElementById("nav-toog").setAttribute("disabled", "disabled")', 0);
+        if (!document.getElementById("navbarNav").classList.contains("show")) {
+            document.getElementById("navbarNav").classList.add('bg-color');
+            if (document.getElementById("profile_btn") != null)
+                setTimeout("document.getElementById('profile_btn').classList.remove('btn')", 0);
+        }
         if (document.getElementById("profile_btn") != null)
-            setTimeout("document.getElementById('profile_btn').classList.add('btn')", 0);
+            if (document.getElementById('profile_btn').classList.contains('btn'))
+                setTimeout("document.getElementById('profile_btn').classList.remove('btn')", 0);
+            else
+                setTimeout("document.getElementById('profile_btn').classList.add('btn')", 0);
+        setTimeout('document.getElementById("nav-toog").setAttribute("disabled", "disabled")', 0);
     }
     else {
         document.getElementById("navbarNav").classList.add('bg-color');
-        setTimeout('document.getElementById("nav-toog").setAttribute("disabled", "disabled")', 0);
         if (document.getElementById("profile_btn") != null)
             setTimeout("document.getElementById('profile_btn').classList.remove('btn')", 0);
+        setTimeout('document.getElementById("nav-toog").setAttribute("disabled", "disabled")', 0);
     }
-    setTimeout('document.getElementById("nav-toog").removeAttribute("disabled")', 400);
+    setTimeout('document.getElementById("nav-toog").removeAttribute("disabled")', 500);
     console.log(isEnabled);
 }
 
 document.getElementById("nav-toog").addEventListener("click", backColor);
 function colapse() {
-    // console.log("Collapse");
-    // document.getElementById("navbarNav").classList.add('bg-color');
-    document.getElementById("navbarNav").classList.remove("show");
+    if (document.getElementById("navbarNav").classList.contains("show")) {
+        console.log("Collapse");
+        document.getElementById("navbarNav").classList.remove("show");
+        document.getElementById("navbarNav").classList.add('bg-color');
+        if (document.getElementById("profile_btn") != null)
+            document.getElementById('profile_btn').classList.add('btn')
+    }
 }
 document.addEventListener("click", colapse);
 
-var url = window.location.href;
+// var url = window.location.href;
 
-var path = String(url).substring(String(url).lastIndexOf("/") + 1, String(url).length);
-// console.log(path)
-if (path == "" || path == "projects.html" || path == "index.html" || path == "contact.html") {
-    console.log("Correct Path");
-} else {
-    location.replace("https://www.sonujha.in/error.html");
-}
+// var path = String(url).substring(String(url).lastIndexOf("/") + 1, String(url).length);
+// // console.log(path)
+// if (path == "" || path == "projects.html" || path == "index.html" || path == "contact.html") {
+//     console.log("Correct Path");
+// } else {
+//     location.replace("https://www.sonujha.in/error.html");
+// }
+
+// window.addEventListener("load", function () {
+//     var pathname = window.location.pathname;
+//     console.log(pathname);
+//     if (pathname != "/error.html") {
+//         window.location.replace("/error.html");
+//     }
+// });
