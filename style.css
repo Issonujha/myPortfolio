@@ -6,12 +6,6 @@ body {
 	background-attachment: fixed;
 }
 
-.container {
-	border-radius: 16px;
-	max-width: 1180px;
-	margin: 0 30px;
-}
-
 a {
 	color: #ffffff;
 	text-decoration: none;
