@@ -50,3 +50,13 @@ function colapse() {
     document.getElementById("navbarNav").classList.remove("show");
 }
 document.addEventListener("click", colapse);
+
+var url = window.location.href;
+
+var path = String(url).substring(String(url).lastIndexOf("/") + 1, String(url).length);
+console.log(path)
+if (path == "" || path == "projects.html" || path == "index.html" || path == "contact.html") {
+    console.log(true);
+} else {
+    location.replace("https://sonujha.in/error.html");
+}
