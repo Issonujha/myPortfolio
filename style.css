@@ -146,3 +146,12 @@ textarea {
 		padding: 10px;
 	}
 }
+
+@media all and (max-width: 575px) {
+	.bg-color {
+		background-color: skyblue;
+		color: white;
+		text-decoration-color: white;
+		border-radius: 10px;
+	}
+}

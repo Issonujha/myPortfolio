@@ -24,3 +24,16 @@ if (storedDarkModeState === 'true') {
 }
 
 document.getElementById('dark-mode-toggle').addEventListener('click', toggleDarkMode);
+
+function backColor() {
+    const isEnabled = document.getElementById("navbarNav").classList.contains('bg-color');
+    if (isEnabled === true) {
+        document.getElementById("navbarNav").classList.remove('bg-color');
+    }
+    else {
+        document.getElementById("navbarNav").classList.add('bg-color');
+    }
+    console.log(isEnabled);
+}
+
+document.getElementById("nav-toog").addEventListener("click", backColor);
