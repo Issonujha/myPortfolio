@@ -145,14 +145,15 @@
                     <div class="tile1-heading">Get in touch</div>
                     <form action="#" method="post">
                         <div class="form-row">
-                            <input type="text" id="name" class="form-field" placeholder="Enter your name">
+                            <input type="text" id="name" class="form-field" placeholder="Enter your name" required>
                         </div>
                         <div class="form-row">
-                            <input type="text" id="email" class="form-field" placeholder="Enter your email address">
+                            <input type="email" id="email" class="form-field" placeholder="Enter your email address"
+                                required>
                         </div>
                         <div class="form-row">
-                            <textarea id="message" class="form-field"
-                                placeholder="Go ahead we are listening..."></textarea>
+                            <textarea id="message" class="form-field" placeholder="Go ahead we are listening..."
+                                required></textarea>
                         </div>
                         <div class="form-row">
                             <input type="button" class="form-field btn" onclick="sendEmail()" value="Submit">
@@ -312,19 +313,40 @@
             let email = document.getElementById("email").value;
             let message = document.getElementById("message").value;
             let finalmessage = `Name : ${name} <br>  Email : ${email} <br>  Message : ${message} <br>`;
-            Email.send({
-                Host: "smtp.elasticemail.com",
-                Username: "sjha9563@gmail.com",
-                Password: "51DB583B468ADE332A1A0C1D29DE527C118E",
-                To: 'sonujha281@yahoo.com',
-                From: "sjha9563@gmail.com",
-                Subject: "Mail from website",
-                Body: finalmessage
-            }).then(
-                message => document.getElementById("response").innerHTML = "<div style='background-color:green; text-align:center; color:white; border-radius:5px;'>Mail Sent Successfully. (Reloding after 5 sec)</font>"
-            );
-            setTimeout(function () { location.reload(true); }, 5000);
+            let error = null;
+            if ((name == null || name == "") || (email == null || email == "") || (message == null || message == ""))
+                error = (name == null || name == "" ? " name," : "") + (email == null || email == "" ? " email," : "") + (message == null || message == "" ? " message," : "");
+            if (error == null || error.length < 0) {
+                let valid = validateEmail(email);
+                console.log(valid);
+                if (valid) {
+                    Email.send({
+                        Host: "smtp.elasticemail.com",
+                        Username: "sjha9563@gmail.com",
+                        Password: "51DB583B468ADE332A1A0C1D29DE527C118E",
+                        To: 'sonujha281@yahoo.com',
+                        From: "sjha9563@gmail.com",
+                        Subject: "Mail from website",
+                        Body: finalmessage
+                    }).then(
+                        message => document.getElementById("response").innerHTML = "<div style='background-color:green; text-align:center; color:white; border-radius:5px;'>Mail Sent Successfully. (Reloding after 5 sec)</div>"
+                    );
+                    setTimeout(function () { location.reload(true); }, 5000);
+                } else {
+                    document.getElementById("response").innerHTML = "<div style='background-color:green; text-align:center; color:white; border-radius:5px;'>Please enter valid Email</div>"
+                }
+            } else {
+                error = error.substring(0, error.lastIndexOf(","))
+                document.getElementById("response").innerHTML = "<div style='background-color:red; text-align:center; color:white; border-radius:5px;'> Please fill in " + error + ".</div>"
+            }
         }
+        function validateEmail(email) {
+            return String(email).toLowerCase()
+                .match(
+                    /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/
+                );
+        }
+
     </script>
 
     <script src="./resources/js/my_js.js"></script>
