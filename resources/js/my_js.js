@@ -61,7 +61,7 @@ function colapse() {
             document.getElementById('profile_btn').classList.add('btn')
     }
 }
-document.addEventListener("click", colapse);
+document.getElementById('main').addEventListener("click", colapse);
 
 // var url = window.location.href;
 

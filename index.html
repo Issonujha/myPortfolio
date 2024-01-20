@@ -22,7 +22,7 @@
 <body>
     <center>
         <!-- Header Starts -->
-        <header>
+        <header class="header">
             <nav class="navbar navbar-expand-sm navbar-light">
                 <div class="container" style="background-color: beige; border-radius: 10px; height: 60px;">
                     <a class="navbar-brand" href="./index.html"><svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -137,21 +137,22 @@
             </nav>
         </header>
         <!-- Header Ends -->
-        <div class="profile">
-            <div class="profile_handler">
-                <span class="profile_internal_handler">
-                    <img src="./resources/images/profile_photo.jpeg" alt="sonu_jha_background" class="profile_page" />
-                </span>
-                <span class="d-inline-block profile_text" tabindex="0" data-toggle="tooltip" title="Sonu Jha">
-                    It's me, <button class="btn btn-primary" id="profile_btn"
-                        style="pointer-events: none; width: 80%; border: none;" type="button" disabled>
-                        <span class="profile_text"> Sonu Jha! </span></button>
-                </span>
+        <main id="main">
+            <div class="profile">
+                <div class="profile_handler">
+                    <span class="profile_internal_handler">
+                        <img src="./resources/images/profile_photo.jpeg" alt="sonu_jha_background"
+                            class="profile_page" />
+                    </span>
+                    <span class="d-inline-block profile_text" tabindex="0" data-toggle="tooltip" title="Sonu Jha">
+                        It's me, <button class="btn btn-primary" id="profile_btn"
+                            style="pointer-events: none; width: 80%; border: none;" type="button" disabled>
+                            <span class="profile_text"> Sonu Jha! </span></button>
+                    </span>
+                </div>
             </div>
-        </div>
-        <hr style="width:100px; margin: auto; margin-bottom: 10px;" />
+            <hr style="width:100px; margin: auto; margin-bottom: 10px;" />
 
-        <main>
             <!-- Here is Details of my profile -->
             <div>
                 <div class="collection_topic">
@@ -159,13 +160,17 @@
                         <h3 class="text-center">About Us</h3>
                     </div>
                     <div class="description text-center">
-                        <p>I am working as a Software Developer Engineer at Actolap Solutions. I am self motivated with
+                        <p>I am working as a Software Developer Engineer at Actolap Solutions. I am self motivated
+                            with
                             great understanding of
-                            basic and advance java. I am good at Java Programming, Data Structure, Collection and Java 8
+                            basic and advance java. I am good at Java Programming, Data Structure, Collection and
+                            Java 8
                             Features. I have also
-                            implemented various projects in Java like: Rest API, Android Application, etc.. I also have
+                            implemented various projects in Java like: Rest API, Android Application, etc.. I also
+                            have
                             knowledge of python basics
-                            and Data Structure, React Js and Node Js. I have also implemented project on Node and react
+                            and Data Structure, React Js and Node Js. I have also implemented project on Node and
+                            react
                             like: Wikipedia API, Notes
                             Manager etc. My Recent project in java includes the Rest APIs, Audits and timelines.</p>
                     </div>
@@ -220,7 +225,6 @@
                         </div>
                 </div>
     </center>
-    </main>
 
     <!-- Remove the container if you want to extend the Footer to full width. -->
     <!-- <div class="container my-5" style=" border-radius: 10px;"> -->
@@ -327,6 +331,7 @@
     <!-- </div> -->
     <!-- End of .container -->
     <!-- footer copy right section end -->
+    </main>
     </center>
     <script src="./resources/js/my_js.js"></script>
 </body>
