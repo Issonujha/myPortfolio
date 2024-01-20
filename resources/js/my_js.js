@@ -29,15 +29,15 @@ function backColor() {
     const isEnabled = document.getElementById("navbarNav").classList.contains('bg-color');
     if (isEnabled === true) {
         document.getElementById("navbarNav").classList.remove('bg-color');
-        if (document.getElementById("profile_btn") != null)
-            document.getElementById("profile_btn").classList.add('btn');
         setTimeout('document.getElementById("nav-toog").setAttribute("disabled", "disabled")', 0);
+        if (document.getElementById("profile_btn") != null)
+            setTimeout("document.getElementById('profile_btn').classList.add('btn')", 0);
     }
     else {
         document.getElementById("navbarNav").classList.add('bg-color');
-        if (document.getElementById("profile_btn") != null)
-            document.getElementById("profile_btn").classList.remove('btn');
         setTimeout('document.getElementById("nav-toog").setAttribute("disabled", "disabled")', 0);
+        if (document.getElementById("profile_btn") != null)
+            setTimeout("document.getElementById('profile_btn').classList.remove('btn')", 0);
     }
     setTimeout('document.getElementById("nav-toog").removeAttribute("disabled")', 400);
     console.log(isEnabled);
@@ -45,8 +45,8 @@ function backColor() {
 
 document.getElementById("nav-toog").addEventListener("click", backColor);
 function colapse() {
-    console.log("Collapse");
-    document.getElementById("navbarNav").classList.add('bg-color');
+    // console.log("Collapse");
+    // document.getElementById("navbarNav").classList.add('bg-color');
     document.getElementById("navbarNav").classList.remove("show");
 }
 document.addEventListener("click", colapse);
@@ -54,9 +54,9 @@ document.addEventListener("click", colapse);
 var url = window.location.href;
 
 var path = String(url).substring(String(url).lastIndexOf("/") + 1, String(url).length);
-console.log(path)
+// console.log(path)
 if (path == "" || path == "projects.html" || path == "index.html" || path == "contact.html") {
-    console.log(true);
+    console.log("Correct Path");
 } else {
-    location.replace("https://sonujha.in/error.html");
+    location.replace("https://www.sonujha.in/error.html");
 }
