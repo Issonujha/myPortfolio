@@ -162,6 +162,22 @@
   <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js">
   </script>
   <script>
+    function signInCustom() {
+      var token = "token123";
+      // [START auth_sign_in_custom]
+      firebase.auth().signInWithCustomToken(token)
+        .then((userCredential) => {
+          // Signed in
+          var user = userCredential.user;
+          // ...
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // ...
+        });
+      // [END auth_sign_in_custom]
+    }
     let firebaseConfig = {
       apiKey: "AIzaSyCPNWRvTubjG5WXsT4pGsj9Jga-bh2XEZ0",
       authDomain: "myportfolio-bb8f2.firebaseapp.com",
@@ -181,32 +197,6 @@
     document.getElementById('contactForm')
       .addEventListener('submit', submitForm);
 
-    // function submitForm(e) {
-    //   e.preventDefault();
-
-    //   // Get values
-    //   let name = getInputVal('name');
-    //   let email = getInputVal('email');
-
-    //   saveMessage(name, email);
-    //   document.getElementById('contactForm').reset();
-    // }
-
-    // Function to get form values
-    function getInputVal(id) {
-      return document.getElementById(id).value;
-    }
-
-    // Save message to firebase
-    function saveMessage(name, email) {
-      let newMessageRef = messagesRef.push();
-      newMessageRef.set({
-        name: name,
-        email: email,
-      });
-      console.log("Done")
-    }
-
     function submitForm(e) {
       e.preventDefault();
       var type = "1";
@@ -223,34 +213,29 @@
         // Uploaded completed successfully, now we can get the download URL
         thisref.snapshot.ref.getDownloadURL().then(function (downloadURL) {
           //getting url of image
-          document.getElementById("url ").value = downloadURL;
+          document.getElementById("url").value = downloadURL;
+          let name = getInputVal('name');
+          console.log(downloadURL, name)
+          saveMessage(downloadURL, name);
           alert('uploaded successfully');
-          saveMessage(downloadURL);
         });
       });
-
-      // Get values
       var url = getInputVal('files ');
-      // Save message
-      // saveMessage(url);
     }
+
+
     function getInputVal(id) {
-      document.getElementById('contactForm').reset();
-
+      return document.getElementById(id).value;
     }
 
-
-    // Function to get form values
-    // function getInputVal(id) {
-    //   return document.getElementById(id).value;
-    // }
-
-    // Save message to firebase database
-    function saveMessage(url) {
-      var newMessageRef = messagesRef.push();
+    // Save message to firebase
+    function saveMessage(url, name) {
+      let newMessageRef = messagesRef.push();
       newMessageRef.set({
-        imageurl: url,
+        name: name,
+        url: url,
       });
+      console.log("Done")
     }
   </script>
 </body>
