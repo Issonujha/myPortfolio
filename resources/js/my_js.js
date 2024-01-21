@@ -80,3 +80,12 @@ document.getElementById('main').addEventListener("click", colapse);
 //         window.location.replace("/error.html");
 //     }
 // });
+if (document.getElementById("submitForm") != null)
+    document.getElementById("submitForm").addEventListener('click', disableButton);
+
+function disableButton() {
+    console.log("Called");
+    setTimeout('document.getElementById("submitForm").classList.remove("btn")', 100);
+    setTimeout('document.getElementById("submitForm").setAttribute("disabled", "disabled")', 100);
+    window.location.reload(true);
+}

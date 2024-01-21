@@ -11,6 +11,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+  </script>
   <link rel="stylesheet" href="./style.css">
   <link rel="stylesheet" href="./resources/css/my_style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -122,9 +124,108 @@
       </nav>
     </header>
     <!-- Header Ends -->
+
+
+    <h2 class="text-primary" style="margin-left: 15px; margin-bottom: 10px">
+      For Admin Only : Add Project
+    </h2>
+
+    <form class="container" id="contactForm">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-group">
+            <label for="exampleFormControlInput1">
+              Project Name
+            </label>
+
+            <input type="text" class="form-control" id="name" placeholder="Enter Project name">
+          </div>
+
+          <div class="form-group">
+            <label for="exampleFormControlInput1">
+              Project Image
+            </label>
+            <input type="file" class="form-control" id="files ">
+          </div>
+        </div>
+        <button type="submit" id="url" class="btn btn-primary" style="margin-left: 15px; margin-top: 10px">
+          Submit
+        </button>
+      </div>
+    </form>
+
+
   </center>
   <main id="main"></main>
   <script src="./resources/js/my_js.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js">
+  </script>
+  <script>
+    let firebaseConfig = {
+      apiKey: "AIzaSyCPNWRvTubjG5WXsT4pGsj9Jga-bh2XEZ0",
+      authDomain: "myportfolio-bb8f2.firebaseapp.com",
+      projectId: "myportfolio-bb8f2",
+      storageBucket: "myportfolio-bb8f2.appspot.com",
+      messagingSenderId: "266363657887",
+      appId: "1:266363657887:web:00fc9f76f5ae234e4e8caa",
+      measurementId: "G-4VX5CK9ZWP",
+      databaseURL: "https://myportfolio-bb8f2-default-rtdb.firebaseio.com/"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    let messagesRef = firebase.database()
+      .ref('Contact Data');
+
+
+    // Function to get form values
+    function getInputVal(id) {
+      console.log(id);
+      if (document.getElementById(id) != null)
+        return document.getElementById(id).value;
+    }
+
+    // Save message to firebase
+    function saveMessage(name, email, url) {
+      let newMessageRef = messagesRef.push();
+      newMessageRef.set({
+        name: name,
+        email: email,
+        url: url
+      });
+      console.log("Done");
+    }
+
+    function uploadimage() {
+      var type = 1;
+      var storage = firebase.storage();
+      var file = document.getElementById("files ").files[0];
+      var storageref = storage.ref();
+      var thisref = storageref.child(type).child(file.name).put(file);
+      thisref.on('state_changed', function (snapshot) {
+
+
+      }, function (error) {
+
+      }, function () {
+        // Uploaded completed successfully, now we can get the download URL
+        thisref.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+          //getting url of image
+          e.preventDefault();
+          document.getElementById("url").value = downloadURL;
+          alert('uploaded successfully');
+        });
+      });
+
+      // Get values
+      let name = getInputVal('name');
+      let email = getInputVal('email');
+      var url = getInputVal('url');
+      // Save message
+      console.log(name, email, url);
+      saveMessage(name, email, url);
+    }
+  </script>
 </body>
 
 </html>
