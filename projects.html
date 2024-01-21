@@ -145,6 +145,7 @@
             <label for="exampleFormControlInput1">
               Project Image
             </label>
+
             <input type="file" class="form-control" id="files ">
           </div>
         </div>
@@ -177,27 +178,38 @@
     let messagesRef = firebase.database()
       .ref('Contact Data');
 
+    document.getElementById('contactForm')
+      .addEventListener('submit', submitForm);
+
+    // function submitForm(e) {
+    //   e.preventDefault();
+
+    //   // Get values
+    //   let name = getInputVal('name');
+    //   let email = getInputVal('email');
+
+    //   saveMessage(name, email);
+    //   document.getElementById('contactForm').reset();
+    // }
 
     // Function to get form values
     function getInputVal(id) {
-      console.log(id);
-      if (document.getElementById(id) != null)
-        return document.getElementById(id).value;
+      return document.getElementById(id).value;
     }
 
     // Save message to firebase
-    function saveMessage(name, email, url) {
+    function saveMessage(name, email) {
       let newMessageRef = messagesRef.push();
       newMessageRef.set({
         name: name,
         email: email,
-        url: url
       });
-      console.log("Done");
+      console.log("Done")
     }
 
-    function uploadimage() {
-      var type = 1;
+    function submitForm(e) {
+      e.preventDefault();
+      var type = "1";
       var storage = firebase.storage();
       var file = document.getElementById("files ").files[0];
       var storageref = storage.ref();
@@ -211,19 +223,34 @@
         // Uploaded completed successfully, now we can get the download URL
         thisref.snapshot.ref.getDownloadURL().then(function (downloadURL) {
           //getting url of image
-          e.preventDefault();
-          document.getElementById("url").value = downloadURL;
+          document.getElementById("url ").value = downloadURL;
           alert('uploaded successfully');
+          saveMessage(downloadURL);
         });
       });
 
       // Get values
-      let name = getInputVal('name');
-      let email = getInputVal('email');
-      var url = getInputVal('url');
+      var url = getInputVal('files ');
       // Save message
-      console.log(name, email, url);
-      saveMessage(name, email, url);
+      // saveMessage(url);
+    }
+    function getInputVal(id) {
+      document.getElementById('contactForm').reset();
+
+    }
+
+
+    // Function to get form values
+    // function getInputVal(id) {
+    //   return document.getElementById(id).value;
+    // }
+
+    // Save message to firebase database
+    function saveMessage(url) {
+      var newMessageRef = messagesRef.push();
+      newMessageRef.set({
+        imageurl: url,
+      });
     }
   </script>
 </body>
