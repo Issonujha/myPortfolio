@@ -140,26 +140,31 @@
 
               <input type="text" class="form-control" id="name" placeholder="Enter Project name">
             </div>
+            <label for="exampleFormControlInput1">
+              Project Link
+            </label>
 
-            <div class="form-group">
-              <label for="exampleFormControlInput1">
-                Project Image
-              </label>
-
-              <input type="file" class="form-control" id="files ">
-            </div>
-            <div class="form-group">
-              <label for="exampleFormControlInput1">
-                Project Description
-              </label>
-
-              <textarea name="textArea" id="description" cols="30" rows="10"></textarea>
-            </div>
+            <input type="text" class="form-control" id="link" placeholder="Enter Project Link">
           </div>
-          <button type="submit" id="url" class="btn btn-primary" style="margin-left: 15px; margin-top: 10px">
-            Submit
-          </button>
-          <hr>
+          <div class="form-group">
+            <label for="exampleFormControlInput1">
+              Project Image
+            </label>
+
+            <input type="file" class="form-control" id="files ">
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlInput1">
+              Project Description
+            </label>
+
+            <textarea name="textArea" id="description" cols="30" rows="10"></textarea>
+          </div>
+        </div>
+        <button type="submit" id="url" class="btn btn-primary" style="margin-left: 15px; margin-top: 10px">
+          Submit
+        </button>
+        <hr>
         </div>
       </form>
       <div class="outerForProject">
@@ -226,8 +231,9 @@
           document.getElementById("url").value = downloadURL;
           let name = getInputVal('name');
           let description = getInputVal('description');
+          let link = getInputVal('link');
           console.log(downloadURL, name)
-          saveMessage(downloadURL, name, description);
+          saveMessage(downloadURL, name, description, link);
           alert('uploaded successfully');
         });
       });
@@ -240,12 +246,13 @@
     }
 
     // Save message to firebase
-    function saveMessage(url, name, description) {
+    function saveMessage(url, name, description, link) {
       let newMessageRef = messagesRef.push();
       newMessageRef.set({
         name: name,
         url: url,
-        description: description
+        description: description,
+        projectLink: link
       });
       console.log("Done")
       window.location.reload();
@@ -257,8 +264,26 @@
       snap.forEach(function (child) {
         var childData = child.val();
         var names = childData.name;
-        var zips = childData.zip;
-        document.getElementById("answer").innerHTML += "<tr><td>" + names + "</td><td> " + zips + "</td></tr>";
+        var description = childData.description;
+        var url = childData.url;
+        var projectLink = childData.projectLink;
+        document.getElementById("answer").innerHTML +=
+          `<div class="row d-inline-block">
+          <div class="col-sm-6 mb-3 mb-sm-0">
+            <div class="">
+              <div class="card-body">
+                <h5 class="card-title">`+ names + `</h5>
+                <p class="card-text">`+ description + `</p>
+                <div style="margin: 10px;">
+                  <img src="`+ url + `" alt="Rest API" height=100px width:100px>
+                </div>
+                <a href="`+ projectLink + `" target="_blank"
+                  class="btn btn-primary">Search
+                  Link</a>
+              </div>
+            </div>
+          </div >
+        </div>`;
       });
     });
   </script>
