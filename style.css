@@ -155,3 +155,20 @@ footer {
 	width: 100%;
 	margin-top: 50px;
 }
+
+.outerForProject {
+	border-radius: 10px;
+	float: right;
+	display: flex;
+	position: absolute;
+	bottom: 0;
+	margin-left: 88%;
+	margin-bottom: 5%;
+}
+.outerForProject > button {
+	border-radius: 40%;
+	width: 40px;
+	height: 40px;
+	background-color: skyblue;
+	border: none;
+}

@@ -24,7 +24,7 @@
 <body>
   <center>
     <!-- Header Starts -->
-    <header>
+    <header class="header">
       <nav class="navbar navbar-expand-sm navbar-light">
         <div class="container" style="background-color: beige; border-radius: 10px; height: 60px;">
           <a class="navbar-brand" href="./index.html"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -125,39 +125,49 @@
     </header>
     <!-- Header Ends -->
 
+    <main id="main">
+      <form class="container" id="contactForm" hidden>
+        <hr>
+        <h2 class="text-primary" style="margin-left: 15px; margin-bottom: 10px">
+          For Admin Only : Add Project
+        </h2>
+        <div class="" style="border-radius: 10px;">
+          <div class="card-body">
+            <div class="form-group">
+              <label for="exampleFormControlInput1">
+                Project Name
+              </label>
 
-    <h2 class="text-primary" style="margin-left: 15px; margin-bottom: 10px">
-      For Admin Only : Add Project
-    </h2>
+              <input type="text" class="form-control" id="name" placeholder="Enter Project name">
+            </div>
 
-    <form class="container" id="contactForm">
-      <div class="card">
-        <div class="card-body">
-          <div class="form-group">
-            <label for="exampleFormControlInput1">
-              Project Name
-            </label>
+            <div class="form-group">
+              <label for="exampleFormControlInput1">
+                Project Image
+              </label>
 
-            <input type="text" class="form-control" id="name" placeholder="Enter Project name">
+              <input type="file" class="form-control" id="files ">
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlInput1">
+                Project Description
+              </label>
+
+              <textarea name="textArea" id="description" cols="30" rows="10"></textarea>
+            </div>
           </div>
-
-          <div class="form-group">
-            <label for="exampleFormControlInput1">
-              Project Image
-            </label>
-
-            <input type="file" class="form-control" id="files ">
-          </div>
+          <button type="submit" id="url" class="btn btn-primary" style="margin-left: 15px; margin-top: 10px">
+            Submit
+          </button>
+          <hr>
         </div>
-        <button type="submit" id="url" class="btn btn-primary" style="margin-left: 15px; margin-top: 10px">
-          Submit
-        </button>
+      </form>
+      <div class="outerForProject">
+        <button class="callToAddProject" onclick="showForm()">Add</button>
       </div>
-    </form>
-
-
+      <div id="answer"></div>
+    </main>
   </center>
-  <main id="main"></main>
   <script src="./resources/js/my_js.js"></script>
   <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js">
   </script>
@@ -215,8 +225,9 @@
           //getting url of image
           document.getElementById("url").value = downloadURL;
           let name = getInputVal('name');
+          let description = getInputVal('description');
           console.log(downloadURL, name)
-          saveMessage(downloadURL, name);
+          saveMessage(downloadURL, name, description);
           alert('uploaded successfully');
         });
       });
@@ -229,14 +240,27 @@
     }
 
     // Save message to firebase
-    function saveMessage(url, name) {
+    function saveMessage(url, name, description) {
       let newMessageRef = messagesRef.push();
       newMessageRef.set({
         name: name,
         url: url,
+        description: description
       });
       console.log("Done")
+      window.location.reload();
     }
+    messagesRef.on('value', function (snap) {
+      document.getElementById("answer").innerHTML = "";
+      //gets values for each element in data set
+
+      snap.forEach(function (child) {
+        var childData = child.val();
+        var names = childData.name;
+        var zips = childData.zip;
+        document.getElementById("answer").innerHTML += "<tr><td>" + names + "</td><td> " + zips + "</td></tr>";
+      });
+    });
   </script>
 </body>
 

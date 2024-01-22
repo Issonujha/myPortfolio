@@ -89,3 +89,7 @@ function disableButton() {
     setTimeout('document.getElementById("submitForm").setAttribute("disabled", "disabled")', 100);
     window.location.reload(true);
 }
+
+function showForm() {
+    document.getElementById("contactForm").removeAttribute("hidden");
+}
