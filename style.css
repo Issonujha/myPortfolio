@@ -156,7 +156,7 @@ footer {
 	margin-top: 50px;
 }
 
-.outerForProject > button {
+.callToAddProject {
     position: fixed;
     bottom: 0px;
     right: 0px;
@@ -165,5 +165,5 @@ footer {
 	height: 40px;
 	background-color: skyblue;
 	border: none;
-	margin: 50px;
+	margin: 20px;
 }
