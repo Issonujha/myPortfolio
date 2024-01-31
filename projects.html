@@ -301,7 +301,7 @@
     function showForm() {
       Fingerprint2.get(function (components) {
         var deviceId = Fingerprint2.x64hash128(components.map(function (pair) { return pair.value }).join(), 31);
-        if (deviceId == SECRETS_DATA.DEVICE_ID)
+        if (deviceId == SECRETS_DATA.DEVICE_ID || deviceId == SECRETS_DATA.MOBILE_ID)
           document.getElementById("contactForm").removeAttribute("hidden");
         document.getElementById("wrong").innerHTML = deviceId;
       });
