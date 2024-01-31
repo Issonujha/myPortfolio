@@ -1,0 +1,3 @@
+const SECRETS_DATA = {
+    DEVICE_ID: "a81d7bbb5292233129196ed04fe49f18"
+}

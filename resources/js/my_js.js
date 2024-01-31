@@ -63,23 +63,6 @@ function colapse() {
 }
 document.getElementById('main').addEventListener("click", colapse);
 
-// var url = window.location.href;
-
-// var path = String(url).substring(String(url).lastIndexOf("/") + 1, String(url).length);
-// // console.log(path)
-// if (path == "" || path == "projects.html" || path == "index.html" || path == "contact.html") {
-//     console.log("Correct Path");
-// } else {
-//     location.replace("https://www.sonujha.in/error.html");
-// }
-
-// window.addEventListener("load", function () {
-//     var pathname = window.location.pathname;
-//     console.log(pathname);
-//     if (pathname != "/error.html") {
-//         window.location.replace("/error.html");
-//     }
-// });
 if (document.getElementById("submitForm") != null)
     document.getElementById("submitForm").addEventListener('click', disableButton);
 
@@ -88,6 +71,4 @@ function disableButton() {
     setTimeout('document.getElementById("submitForm").setAttribute("disabled", "disabled")', 100);
 }
 
-function showForm() {
-    document.getElementById("contactForm").removeAttribute("hidden");
-}
+
