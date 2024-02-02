@@ -169,6 +169,7 @@
         <hr>
         </div>
       </form>
+      <div id="wrong"> Id </div>
       <div
         style="font-size: x-large; font-weight: 600; border-radius: 10px; background-color: skyblue; display: inline; padding: 10px; color: whitesmoke;">
         My Projects
@@ -300,9 +301,10 @@
     function showForm() {
       Fingerprint2.get(function (components) {
         var deviceId = Fingerprint2.x64hash128(components.map(function (pair) { return pair.value }).join(), 31);
-        if (deviceId == SECRETS_DATA.DEVICE_ID || deviceId == SECRETS_DATA.MOBILE_ID)
+        if (document.body.classList.contains('dark-mode'))
           document.getElementById("contactForm").removeAttribute("hidden");
-        document.getElementById("wrong").innerHTML = deviceId;
+        // document.getElementById("wrong").innerHTML = deviceId;
+        console.log(deviceId);
       });
     }
   </script>
