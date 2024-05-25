@@ -120,7 +120,3 @@ function signInCustom() {
         });
 }
 
-function showForm() {
-    if (document.body.classList.contains('dark-mode'))
-        document.getElementById("contactForm").removeAttribute("hidden");
-}

@@ -169,3 +169,7 @@ footer {
 	font-size: x-large;
 	font-weight: 500px;
 }
+
+.zindex {
+	z-index: 1;
+}
