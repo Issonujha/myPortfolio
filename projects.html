@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title> My Portfolio : Sonu Kumar Jha </title>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
   <link rel="icon" href="./resources/images/profile.png" type="image/x-icon">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -151,7 +153,7 @@
               Project Image
             </label>
 
-            <input type="file" class="form-control" id="files ">
+            <input type="file" class="form-control" id="files">
           </div>
           <div class="form-group">
             <label for="exampleFormControlInput1">
@@ -177,136 +179,8 @@
       <div id="answer" style="margin-top: 20px;"></div>
     </main>
   </center>
-  <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js">
-  </script>
-  <script src="./secrets.js" type="text/javascript"></script>
+  <script type="module" src="./databaseConfig.js" type="text/javascript"></script>
   <script src=" https://cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/2.1.0/fingerprint2.min.js"></script>
-
-  <script>
-    function signInCustom() {
-      var token = "token123";
-      // [START auth_sign_in_custom]
-      firebase.auth().signInWithCustomToken(token)
-        .then((userCredential) => {
-          // Signed in
-          var user = userCredential.user;
-          // ...
-        })
-        .catch((error) => {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          // ...
-        });
-      // [END auth_sign_in_custom]
-    }
-    let firebaseConfig = {
-      apiKey: "AIzaSyCPNWRvTubjG5WXsT4pGsj9Jga-bh2XEZ0",
-      authDomain: "myportfolio-bb8f2.firebaseapp.com",
-      projectId: "myportfolio-bb8f2",
-      storageBucket: "myportfolio-bb8f2.appspot.com",
-      messagingSenderId: "266363657887",
-      appId: "1:266363657887:web:00fc9f76f5ae234e4e8caa",
-      measurementId: "G-4VX5CK9ZWP",
-      databaseURL: "https://myportfolio-bb8f2-default-rtdb.firebaseio.com/"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-
-    let messagesRef = firebase.database()
-      .ref('Contact Data');
-
-    document.getElementById('contactForm')
-      .addEventListener('submit', submitForm);
-
-    function submitForm(e) {
-      e.preventDefault();
-      var type = "1";
-      var storage = firebase.storage();
-      var file = document.getElementById("files ").files[0];
-      var storageref = storage.ref();
-      var thisref = storageref.child(type).child(file.name).put(file);
-      thisref.on('state_changed', function (snapshot) {
-
-
-      }, function (error) {
-
-      }, function () {
-        // Uploaded completed successfully, now we can get the download URL
-        thisref.snapshot.ref.getDownloadURL().then(function (downloadURL) {
-          //getting url of image
-          document.getElementById("url").value = downloadURL;
-          let name = getInputVal('name');
-          let description = getInputVal('description');
-          let link = getInputVal('link');
-          console.log(downloadURL, name)
-          saveMessage(downloadURL, name, description, link);
-          alert('uploaded successfully');
-        });
-      });
-      var url = getInputVal('files ');
-    }
-
-
-    function getInputVal(id) {
-      return document.getElementById(id).value;
-    }
-
-    // Save message to firebase
-    function saveMessage(url, name, description, link) {
-      let newMessageRef = messagesRef.push();
-      newMessageRef.set({
-        name: name,
-        url: url,
-        description: description,
-        projectLink: link
-      });
-      console.log("Done")
-      window.location.reload();
-    }
-    messagesRef.on('value', function (snap) {
-      document.getElementById("answer").innerHTML = "";
-      //gets values for each element in data set
-      var count = 0;
-      snap.forEach(function (child) {
-        var childData = child.val();
-        var names = childData.name;
-        var description = childData.description;
-        var url = childData.url;
-        var projectLink = childData.projectLink;
-        document.getElementById("answer").innerHTML +=
-          `<div class="row d-inline-block">
-        <div class="col-sm-6 mb-3 mb-sm-0">
-          <div class="">
-            <div class="card-body">
-              <h5 class="card-title">`+ names + `</h5>
-              <p class="card-text">`+ description + `</p>
-              <div style="margin: 10px;">
-                <img src="`+ url + `" alt="Rest API" height=100px width:100px>
-              </div>
-              <a href="`+ projectLink + `" target="_blank"
-                class="btn btn-primary">Search
-                Link</a>
-            </div>
-          </div>
-        </div >
-      </div>`;
-        if (count % 2 != 0) {
-          document.getElementById("answer").innerHTML += "<hr>"
-        }
-        count += 1;
-      });
-    });
-
-    function showForm() {
-      Fingerprint2.get(function (components) {
-        var deviceId = Fingerprint2.x64hash128(components.map(function (pair) { return pair.value }).join(), 31);
-        if (document.body.classList.contains('dark-mode'))
-          document.getElementById("contactForm").removeAttribute("hidden");
-        // document.getElementById("wrong").innerHTML = deviceId;
-        console.log(deviceId);
-      });
-    }
-  </script>
   <script src="./resources/js/my_js.js"></script>
 </body>
 
