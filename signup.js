@@ -28,7 +28,8 @@ onAuthStateChanged(auth, (user) => {
         // https://firebase.google.com/docs/reference/js/firebase.User
         const uid = user.uid;
         console.log("User is signed in:", user);
-        window.location.href = "index.html";
+        if (window.location.href.endsWith("login.html") || window.location.href.endsWith("signup.html"))
+            window.location.href = "index.html";
         // You can redirect the user to another page or update the UI
         loginErrorMessage.textContent = "Already logged in!";
         loginErrorMessage.style.color = "green";

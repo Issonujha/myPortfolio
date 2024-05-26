@@ -28,7 +28,7 @@ onAuthStateChanged(auth, (user) => {
         if (window.location.href.includes("projects") && user.email == "sjha9563@gmail.com") {
             console.log("You can add project now.");
             document.getElementById("afterLogin").removeAttribute("hidden");
-        } else
+        } else if (window.location.href.endsWith("login.html") || window.location.href.endsWith("signup.html"))
             window.location.href = "index.html";
     } else {
         // User is signed out
