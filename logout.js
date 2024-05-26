@@ -1,5 +1,3 @@
-// dashboard.js
-
 // Import the functions you need from the SDKs you need
 import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
 // Import the functions you need from the SDKs you need
