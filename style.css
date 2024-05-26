@@ -173,3 +173,17 @@ footer {
 .zindex {
 	z-index: 1;
 }
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-item-left {
+	flex: 30%;
+}
+
+.flex-item-right {
+  flex: 50%;
+  margin-left: 10px;
+}
