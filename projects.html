@@ -24,6 +24,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <script type="module" src="./login.js"></script>
   <script>
     function showForm() {
       var contactForm = document.getElementById("contactForm");
@@ -177,10 +178,12 @@
         style="font-size: x-large; font-weight: 600; border-radius: 10px; background-color: skyblue; display: inline; padding: 10px; color: whitesmoke;">
         My Projects
       </div>
-      <button class="callToAddProject zindex" type="button" class="btn btn-primary" data-toggle="modal"
-        data-target="#exampleModal">
-        +
-      </button>
+      <div id="afterLogin" hidden>
+        <button class="callToAddProject zindex" type="button" class="btn btn-primary" data-toggle="modal"
+          data-target="#exampleModal">
+          +
+        </button>
+      </div>
       <div id="answer" style="margin-top: 20px;"></div>
     </main>
   </center>
