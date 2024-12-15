@@ -80,16 +80,18 @@ onValue(messagesRef, (snapshot) => {
     snapshot.forEach((child) => {
         const childData = child.val();
         const names = childData.name;
+        const year = childData.year;
         const description = childData.description;
         const url = childData.url;
         const projectLink = childData.projectLink;
         answerDiv.innerHTML +=
             `<div class="row d-inline-block">
-        <div class="col-sm-6 mb-3 mb-sm-0">
+        <div class="col-sm-6 mb-3">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">${names}</h5>
               <p class="card-text">${description}</p>
+              <p class="card-text"><strong> ${year} </strong></p>
               <div style="margin: 10px;">
                 <img src="${url}" alt="Rest API" height="100px" width="100px">
               </div>
@@ -98,9 +100,9 @@ onValue(messagesRef, (snapshot) => {
           </div>
         </div>
       </div>`;
-        if (count % 2 != 0) {
-            answerDiv.innerHTML += "<hr>";
-        }
+        // if (count % 2 != 0) {
+        //     answerDiv.innerHTML += "<hr>";
+        // }
         count += 1;
     });
 });
