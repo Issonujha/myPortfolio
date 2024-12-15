@@ -76,7 +76,6 @@ function saveMessage(url, name, description, link) {
 onValue(messagesRef, (snapshot) => {
     const answerDiv = document.getElementById("answer");
     answerDiv.innerHTML = "";
-    let count = 0;
     snapshot.forEach((child) => {
         const childData = child.val();
         const names = childData.name;
@@ -95,15 +94,11 @@ onValue(messagesRef, (snapshot) => {
               <div style="margin: 10px;">
                 <img src="${url}" alt="Rest API" height="100px" width="100px">
               </div>
-              <a href="${projectLink}" target="_blank" class="btn btn-primary">Project Link</a>
+              <a href="${projectLink}" target="_blank" class="btn btn-primary">Click To View</a>
             </div>
           </div>
         </div>
       </div>`;
-        // if (count % 2 != 0) {
-        //     answerDiv.innerHTML += "<hr>";
-        // }
-        count += 1;
     });
 });
 
