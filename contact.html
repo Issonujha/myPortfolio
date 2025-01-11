@@ -10,12 +10,14 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
     <script src="https://smtpjs.com/v3/smtp.js"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/my_style.css">
     <link rel="stylesheet" href="./style.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 
 <body>
@@ -308,11 +310,18 @@
                 menuElement.style.display = "block";
             }
         }
+        (function () {
+            emailjs.init("4hkaMz1jokLiVWumD"); // Replace with your EmailJS user ID
+        })();
         function sendEmail() {
             let name = document.getElementById("name").value;
             let email = document.getElementById("email").value;
             let message = document.getElementById("message").value;
-            let finalmessage = `Name : ${name} <br>  Email : ${email} <br>  Message : ${message} <br>`;
+            const templateParams = {
+                from_name: name,
+                from_email: email,
+                message: message
+            };
             let error = null;
             if ((name == null || name == "") || (email == null || email == "") || (message == null || message == ""))
                 error = (name == null || name == "" ? " name," : "") + (email == null || email == "" ? " email," : "") + (message == null || message == "" ? " message," : "");
@@ -320,21 +329,13 @@
                 let valid = validateEmail(email);
                 console.log(valid);
                 if (valid) {
-                    Email.send({
-                        Host: "smtp.elasticemail.com",
-                        Username: "sjha9563@gmail.com",
-                        Password: "51DB583B468ADE332A1A0C1D29DE527C118E",
-                        To: 'sonujha281@yahoo.com',
-                        From: "sjha9563@gmail.com",
-                        Subject: "Mail from website",
-                        Body: finalmessage
-                    }).then(
+                    emailjs.send("service_r4atjlg", "template_o04o42i", templateParams).then(
                         message => document.getElementById("response").innerHTML = "<div style='background-color:green; text-align:center; color:white; border-radius:5px;'>Mail Sent Successfully. (Reloding after 5 sec)</div>"
                     );
-                    setTimeout(function () { location.reload(true); }, 5000);
                 } else {
                     document.getElementById("response").innerHTML = "<div style='background-color:green; text-align:center; color:white; border-radius:5px;'>Please enter valid Email</div>"
                 }
+                setTimeout(function () { location.reload(true); }, 5000);
             } else {
                 error = error.substring(0, error.lastIndexOf(","))
                 document.getElementById("response").innerHTML = "<div style='background-color:red; text-align:center; color:white; border-radius:5px;'> Please fill in " + error + ".</div>"
