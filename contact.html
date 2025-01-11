@@ -311,7 +311,12 @@
             }
         }
         (function () {
-            emailjs.init("4hkaMz1jokLiVWumD"); // Replace with your EmailJS user ID
+            fetch("/resources/info.env")
+                .then(response => response.text())
+                .then(data => {
+                    const MAILSEND_API_KEY = data.match(/MAILSEND_API_KEY=(.*)/)[1];
+                    emailjs.init(MAILSEND_API_KEY); // Replace with your EmailJS user ID
+                });
         })();
         function sendEmail() {
             let name = document.getElementById("name").value;
