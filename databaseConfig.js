@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
 import { getAuth, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
-import { getDatabase, ref, set, push, onValue } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+import { getDatabase, ref, set, push, onValue, get, limitToLast, orderByChild, query } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js";
 // import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app-check.js";
 
@@ -26,6 +26,7 @@ const storage = getStorage(app);
 
 // Reference to messages in the database
 const messagesRef = ref(db, 'Contact Data');
+const querydata = query(messagesRef, orderByChild('year'), limitToLast(15));
 
 document.getElementById('contactForm').addEventListener('submit', submitForm);
 
@@ -73,11 +74,17 @@ function saveMessage(url, name, description, link) {
     });
 }
 
-onValue(messagesRef, (snapshot) => {
+get(querydata).then((snapshot) => {
     const answerDiv = document.getElementById("answer");
     answerDiv.innerHTML = "";
-    snapshot.forEach((child) => {
-        const childData = child.val();
+    // Sort the array in ascending order by the 'year' field
+    const childData = snapshot.val();
+    const dataList = Object.entries(childData).map(([key, value]) => ({
+        id: key, // Store the key (ID)
+        ...value, // Spread the fields from the value object
+    }));
+    dataList.sort((a, b) => b.year - a.year);
+    dataList.forEach((childData) => {
         const names = childData.name;
         const year = childData.year;
         const description = childData.description;
