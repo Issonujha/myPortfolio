@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
 import { getAuth, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
-import { getDatabase, ref, set, push, onValue, get, limitToLast, orderByChild, query } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+import { getDatabase, ref, set, push, get, orderByChild, query } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js";
 // import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app-check.js";
 
@@ -26,7 +26,7 @@ const storage = getStorage(app);
 
 // Reference to messages in the database
 const messagesRef = ref(db, 'Contact Data');
-const querydata = query(messagesRef, orderByChild('year'), limitToLast(15));
+const querydata = query(messagesRef, orderByChild('year'));
 
 document.getElementById('contactForm').addEventListener('submit', submitForm);
 
