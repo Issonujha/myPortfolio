@@ -25,8 +25,8 @@ div.dark-mode {
 }
 
 .profile_page {
-    width: 30%;
-    height: 35%;
+    width: 25%;
+    height: 25%;
     border-radius: 10%;
 }
 
@@ -37,7 +37,6 @@ div.dark-mode {
 
 .profile_text {
     font-family: 'Pacifico', serif;
-    font-size: 50px;
     margin-left: 20%;
 }
 
@@ -51,31 +50,31 @@ div.dark-mode {
 
 @media all and (min-device-width: 400px) {
     .profile_text {
-        font-size: 12px;
+        font-size: 10px;
     }
 }
 
 @media all and (min-device-width: 590px) {
     .profile_text {
-        font-size: 18px;
+        font-size: 15px;
     }
 }
 
 @media all and (min-device-width: 775px){
     .profile_text {
-        font-size: 24px;
+        font-size: 20px;
     }
 }
 
 @media all and (min-device-width: 1000px){
     .profile_text {
-        font-size: 33px;
+        font-size: 23px;
     }
 }
 
 @media all and (min-device-width: 2000px){
     .profile_text {
-        font-size: 70px;
+        font-size: 50px;
     }
 }
 
