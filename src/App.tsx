@@ -1,6 +1,6 @@
 import React from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
-import { StudioProvider, useStudio } from './context/StudioContext';
+import { StudioProvider } from './context/StudioContext';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { LiveChatWidget } from './components/LiveChatWidget';
@@ -14,12 +14,8 @@ import { ApksPage } from './pages/ApksPage';
 import { AdminDashboardPage } from './pages/AdminDashboardPage';
 
 const AppLayout: React.FC = () => {
-  const { theme } = useStudio();
-
   return (
-    <div className={`min-h-screen transition-colors duration-200 ${
-      theme === 'dark' ? 'bg-[#05070c] text-zinc-300' : 'bg-[#fafafa] text-zinc-800'
-    } font-sans selection:bg-cyan-500 selection:text-black flex flex-col justify-between`}>
+    <div className="min-h-screen transition-colors duration-200 bg-zinc-50 dark:bg-[#05070c] text-zinc-900 dark:text-zinc-300 font-sans selection:bg-cyan-500 selection:text-black flex flex-col justify-between">
       
       {/* Sticky Studio Navbar */}
       <Navbar />
