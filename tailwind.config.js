@@ -8,20 +8,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: '#090d16',
-        card: '#0f172a',
-        'card-border': '#1e293b',
-        primary: '#38bdf8',
-        secondary: '#818cf8',
-        accent: '#c084fc',
+        background: '#0b0f17',
+        surface: '#111827',
+        'surface-hover': '#1f2937',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        mono: ['JetBrains Mono', 'Menlo', 'Monaco', 'Courier New', 'monospace'],
       },
-      animation: {
-        'pulse-subtle': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-      }
     },
   },
   plugins: [],
