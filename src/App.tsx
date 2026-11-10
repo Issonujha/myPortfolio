@@ -1,554 +1,598 @@
-import React, { useState, useEffect } from 'react';
-import { PORTFOLIO_CONTENT } from './data/portfolioData';
+import React, { useState } from 'react';
+import { PORTFOLIO_DATA } from './data/portfolioData';
 import { GithubIcon, LinkedinIcon, ExternalLinkIcon, MailIcon, FileTextIcon, DownloadIcon } from './components/icons';
 
 export const App: React.FC = () => {
-  const [activeSection, setActiveSection] = useState<string>('about');
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [activeProductTab, setActiveProductTab] = useState<string>(PORTFOLIO_DATA.products[0].id);
+  const [codeOrImageTab, setCodeOrImageTab] = useState<'visual' | 'code'>('visual');
+  const [emailCopied, setEmailCopied] = useState(false);
 
-  // Mouse spotlight tracker
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  const activeProduct = PORTFOLIO_DATA.products.find(p => p.id === activeProductTab) || PORTFOLIO_DATA.products[0];
 
-  // Scrollspy to track active section
-  useEffect(() => {
-    const sectionIds = PORTFOLIO_CONTENT.navigation.map(n => n.href.replace('#', ''));
-    
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + 200;
-      for (const id of sectionIds) {
-        const element = document.getElementById(id);
-        if (element) {
-          const top = element.offsetTop;
-          const height = element.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(id);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(PORTFOLIO_DATA.profile.email);
+    setEmailCopied(true);
+    setTimeout(() => setEmailCopied(false), 2000);
+  };
 
   return (
-    <div className="relative bg-[#0b0f17] text-zinc-400 selection:bg-teal-300 selection:text-teal-900 min-h-screen">
-      {/* Interactive Cursor Spotlight Glow */}
-      <div
-        className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300 hidden lg:block"
-        style={{
-          background: `radial-gradient(650px circle at ${mousePos.x}px ${mousePos.y}px, rgba(45, 212, 191, 0.07), transparent 80%)`,
-        }}
-      />
-
-      <div className="mx-auto min-h-screen max-w-screen-xl px-6 py-12 md:px-12 md:py-20 lg:px-24 lg:py-0">
-        <div className="lg:flex lg:justify-between lg:gap-4">
-          
-          {/* ========================================================
-              LEFT COLUMN (Header, Navigation, Socials - Sticky)
-             ======================================================== */}
-          <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24">
-            <div>
-              {/* Profile Header */}
-              <h1 className="text-4xl font-bold tracking-tight text-zinc-100 sm:text-5xl">
-                <a href="/">{PORTFOLIO_CONTENT.profile.name}</a>
-              </h1>
-              <h2 className="mt-3 text-lg font-medium tracking-tight text-zinc-200 sm:text-xl">
-                {PORTFOLIO_CONTENT.profile.title}
-              </h2>
-              <p className="mt-4 max-w-xs text-sm leading-normal text-zinc-400">
-                {PORTFOLIO_CONTENT.profile.tagline}
-              </p>
-
-              {/* Status Indicator */}
-              <div className="mt-6 flex items-center gap-2 text-xs font-mono text-zinc-400">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-500"></span>
-                </span>
-                <span>{PORTFOLIO_CONTENT.profile.location}</span>
+    <div className="min-h-screen bg-[#05070c] text-zinc-300 font-sans selection:bg-cyan-500 selection:text-black">
+      
+      {/* ========================================================
+          1. NAVIGATION BAR (Linear / Stripe style glassmorphism)
+         ======================================================== */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#05070c]/80 backdrop-blur-xl border-b border-white/[0.08]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          {/* Logo Mark */}
+          <a href="#" className="flex items-center gap-2.5 group">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 via-indigo-500 to-purple-600 p-[1px] transition-transform group-hover:scale-105">
+              <div className="w-full h-full bg-[#05070c] rounded-[7px] flex items-center justify-center font-mono text-xs font-bold text-cyan-400">
+                SJ
               </div>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-sm font-bold tracking-tight text-white group-hover:text-cyan-400 transition-colors">
+                Sonu Jha
+              </span>
+              <span className="text-[10px] font-mono text-zinc-500 tracking-wider -mt-0.5">
+                SYSTEMS ARCHITECT
+              </span>
+            </div>
+          </a>
 
-              {/* Desktop Section Navigation (Scrollspy) */}
-              <nav className="nav hidden lg:block mt-16" aria-label="In-page jump links">
-                <ul className="w-max space-y-3">
-                  {PORTFOLIO_CONTENT.navigation.map((item) => {
-                    const sectionId = item.href.replace('#', '');
-                    const isActive = activeSection === sectionId;
-                    return (
-                      <li key={item.href}>
-                        <a
-                          href={item.href}
-                          className={`group flex items-center py-1 transition-all ${
-                            isActive ? 'text-zinc-100' : 'text-zinc-500 hover:text-zinc-200'
-                          }`}
-                        >
-                          <span
-                            className={`mr-4 h-px transition-all duration-200 motion-reduce:transition-none ${
-                              isActive
-                                ? 'w-16 bg-zinc-100'
-                                : 'w-8 bg-zinc-600 group-hover:w-16 group-hover:bg-zinc-200'
-                            }`}
-                          />
-                          <span className="text-xs font-bold uppercase tracking-widest">
-                            {item.label}
-                          </span>
-                        </a>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </nav>
+          {/* Navigation Jump Links */}
+          <div className="hidden md:flex items-center gap-6 text-xs font-medium text-zinc-400">
+            <a href="#systems" className="hover:text-white transition-colors">Products &amp; Systems</a>
+            <a href="#architecture" className="hover:text-white transition-colors">8-Layer AI Stack</a>
+            <a href="#apks" className="hover:text-white transition-colors">Android APKs</a>
+            <a href="#experience" className="hover:text-white transition-colors">Experience</a>
+            <a href="#skills" className="hover:text-white transition-colors">Skills</a>
+          </div>
+
+          {/* Action CTAs */}
+          <div className="flex items-center gap-3">
+            <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-950/60 border border-emerald-800/60 text-[11px] font-mono text-emerald-400">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Available for Roles</span>
             </div>
 
-            {/* Social Footprint & Resume Link */}
-            <div className="mt-8 flex items-center gap-5 text-zinc-400">
-              <a
-                href={PORTFOLIO_CONTENT.profile.github}
-                target="_blank"
-                rel="noreferrer noopener"
-                className="hover:text-zinc-100 transition-colors"
-                aria-label="GitHub Profile"
-              >
-                <GithubIcon className="h-6 w-6" />
-              </a>
-
-              <a
-                href={PORTFOLIO_CONTENT.profile.linkedin}
-                target="_blank"
-                rel="noreferrer noopener"
-                className="hover:text-zinc-100 transition-colors"
-                aria-label="LinkedIn Profile"
-              >
-                <LinkedinIcon className="h-6 w-6" />
-              </a>
-
-              <a
-                href={`mailto:${PORTFOLIO_CONTENT.profile.email}`}
-                className="hover:text-zinc-100 transition-colors"
-                aria-label="Send direct email"
-              >
-                <MailIcon className="h-6 w-6" />
-              </a>
-
-              <a
-                href={PORTFOLIO_CONTENT.profile.resumeUrl}
-                target="_blank"
-                rel="noreferrer noopener"
-                className="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-zinc-300 hover:text-teal-300 transition-colors ml-2 px-3 py-1.5 rounded-full border border-zinc-700/80 hover:border-teal-500/50"
-              >
-                <FileTextIcon className="h-3.5 w-3.5" />
-                <span>Resume</span>
-                <ExternalLinkIcon className="h-3 w-3 opacity-70" />
-              </a>
-            </div>
-          </header>
-
-          {/* ========================================================
-              RIGHT COLUMN (Naturally Scrolling Content)
-             ======================================================== */}
-          <main className="pt-24 lg:w-1/2 lg:py-24">
-            
-            {/* ----------------- SECTION: ABOUT ----------------- */}
-            <section
-              id="about"
-              className="mb-16 scroll-mt-16 md:mb-24 lg:mb-32 lg:scroll-mt-24"
-              aria-label="About Sonu Jha"
+            <a
+              href={PORTFOLIO_DATA.profile.github}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="p-2 text-zinc-400 hover:text-white rounded-lg hover:bg-white/[0.05] transition-colors"
+              aria-label="GitHub Profile"
             >
-              <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-[#0b0f17]/85 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
-                <h2 className="text-sm font-bold uppercase tracking-widest text-zinc-200">
-                  About
-                </h2>
-              </div>
-              <div className="space-y-4 text-zinc-400 leading-relaxed text-sm">
-                <p>
-                  {PORTFOLIO_CONTENT.profile.about1}
-                </p>
-                <p>
-                  {PORTFOLIO_CONTENT.profile.about2}
-                </p>
-                <p>
-                  {PORTFOLIO_CONTENT.profile.about3}
-                </p>
-              </div>
-            </section>
+              <GithubIcon className="w-4 h-4" />
+            </a>
 
-            {/* ----------------- SECTION: EXPERIENCE ----------------- */}
-            <section
-              id="experience"
-              className="mb-16 scroll-mt-16 md:mb-24 lg:mb-32 lg:scroll-mt-24"
-              aria-label="Work experience"
+            <a
+              href={PORTFOLIO_DATA.profile.linkedin}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="p-2 text-zinc-400 hover:text-white rounded-lg hover:bg-white/[0.05] transition-colors"
+              aria-label="LinkedIn Profile"
             >
-              <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-[#0b0f17]/85 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
-                <h2 className="text-sm font-bold uppercase tracking-widest text-zinc-200">
-                  Experience
-                </h2>
-              </div>
+              <LinkedinIcon className="w-4 h-4" />
+            </a>
 
-              <div className="space-y-12">
-                {PORTFOLIO_CONTENT.experiences.map((exp, idx) => (
-                  <div
-                    key={idx}
-                    className="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100"
-                  >
-                    {/* Hover Card Backdrop */}
-                    <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-zinc-800/40 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]" />
-
-                    {/* Timeline Date Header */}
-                    <header
-                      className="z-10 mb-2 mt-1 text-xs font-semibold uppercase tracking-wide text-zinc-500 sm:col-span-2"
-                      aria-label={exp.period}
-                    >
-                      {exp.period}
-                    </header>
-
-                    {/* Content */}
-                    <div className="z-10 sm:col-span-6 space-y-3">
-                      <h3 className="font-medium leading-snug text-zinc-100">
-                        <div>
-                          <span className="inline-flex items-baseline font-semibold leading-tight text-zinc-100 group-hover:text-teal-300 transition-colors">
-                            <span>{exp.role} &bull; </span>
-                            <span className="ml-1 text-zinc-300 font-normal">{exp.company}</span>
-                          </span>
-                        </div>
-                      </h3>
-
-                      <p className="text-xs text-zinc-400 leading-normal">
-                        {exp.summary}
-                      </p>
-
-                      <ul className="space-y-1.5 text-xs text-zinc-400">
-                        {exp.bullets.map((bullet, bIdx) => (
-                          <li key={bIdx} className="flex items-start gap-2">
-                            <span className="text-teal-400 shrink-0 select-none">&bull;</span>
-                            <span>{bullet}</span>
-                          </li>
-                        ))}
-                      </ul>
-
-                      {/* Tech Tags */}
-                      <ul className="flex flex-wrap gap-1.5 pt-2" aria-label="Technologies used">
-                        {exp.skills.map((skill) => (
-                          <li
-                            key={skill}
-                            className="flex items-center rounded-full bg-teal-400/10 px-3 py-1 text-[11px] font-mono font-medium leading-4 text-teal-300"
-                          >
-                            {skill}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-12">
-                <a
-                  href={PORTFOLIO_CONTENT.profile.resumeUrl}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="inline-flex items-baseline font-medium leading-tight text-zinc-200 hover:text-teal-300 focus-visible:text-teal-300 font-semibold group/link text-sm"
-                >
-                  <span>View Full Résumé</span>
-                  <ExternalLinkIcon className="ml-1 inline-block h-3.5 w-3.5 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 motion-reduce:transition-none" />
-                </a>
-              </div>
-            </section>
-
-            {/* ----------------- SECTION: PROJECTS ----------------- */}
-            <section
-              id="projects"
-              className="mb-16 scroll-mt-16 md:mb-24 lg:mb-32 lg:scroll-mt-24"
-              aria-label="Selected engineering projects"
+            <a
+              href={PORTFOLIO_DATA.profile.resumeUrl}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="flex items-center gap-1.5 text-xs font-semibold bg-white hover:bg-zinc-200 text-black px-3.5 py-1.5 rounded-lg transition-all hover:scale-[1.02]"
             >
-              <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-[#0b0f17]/85 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
-                <h2 className="text-sm font-bold uppercase tracking-widest text-zinc-200">
-                  Projects
-                </h2>
-              </div>
-
-              <div className="space-y-12">
-                {PORTFOLIO_CONTENT.projects.map((project) => (
-                  <div
-                    key={project.id}
-                    className="group relative grid pb-1 transition-all sm:grid-cols-8 sm:gap-8 md:gap-4 lg:hover:!opacity-100"
-                  >
-                    <div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-zinc-800/40 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]" />
-
-                    <div className="z-10 mb-2 mt-1 text-xs font-mono font-medium text-zinc-500 sm:col-span-2">
-                      <div>{project.year}</div>
-                      <div className="text-[11px] text-zinc-600 mt-1">{project.role}</div>
-                    </div>
-
-                    <div className="z-10 sm:col-span-6 space-y-2.5">
-                      <h3 className="font-medium leading-snug text-zinc-100">
-                        {project.githubUrl ? (
-                          <a
-                            href={project.githubUrl}
-                            target="_blank"
-                            rel="noreferrer noopener"
-                            className="inline-flex items-baseline font-semibold leading-tight text-zinc-100 hover:text-teal-300 focus-visible:text-teal-300 group/link text-base"
-                          >
-                            <span>{project.title}</span>
-                            <ExternalLinkIcon className="ml-1 inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 motion-reduce:transition-none" />
-                          </a>
-                        ) : (
-                          <span className="font-semibold text-zinc-100 text-base">
-                            {project.title}
-                          </span>
-                        )}
-                      </h3>
-
-                      <p className="text-xs text-zinc-300 font-mono">
-                        {project.summary}
-                      </p>
-
-                      <p className="text-xs text-zinc-400 leading-relaxed">
-                        {project.description}
-                      </p>
-
-                      {project.highlights && (
-                        <ul className="space-y-1 text-xs text-zinc-400 pt-1">
-                          {project.highlights.map((h, hIdx) => (
-                            <li key={hIdx} className="flex items-start gap-1.5">
-                              <span className="text-teal-400 shrink-0">&bull;</span>
-                              <span>{h}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-
-                      {/* Tech badges */}
-                      <ul className="flex flex-wrap gap-1.5 pt-2" aria-label="Technologies used">
-                        {project.techStack.map((tech) => (
-                          <li
-                            key={tech}
-                            className="flex items-center rounded-full bg-teal-400/10 px-3 py-1 text-[11px] font-mono font-medium leading-4 text-teal-300"
-                          >
-                            {tech}
-                          </li>
-                        ))}
-                      </ul>
-
-                      {/* Actions */}
-                      <div className="flex items-center gap-4 pt-2">
-                        {project.githubUrl && (
-                          <a
-                            href={project.githubUrl}
-                            target="_blank"
-                            rel="noreferrer noopener"
-                            className="inline-flex items-center gap-1.5 text-xs text-zinc-400 hover:text-zinc-100 font-mono"
-                          >
-                            <GithubIcon className="w-3.5 h-3.5" />
-                            <span>Source</span>
-                          </a>
-                        )}
-
-                        {project.apkDownloadUrl && (
-                          <a
-                            href={project.apkDownloadUrl}
-                            download
-                            className="inline-flex items-center gap-1.5 text-xs text-teal-300 hover:text-teal-200 font-mono"
-                          >
-                            <DownloadIcon className="w-3.5 h-3.5" />
-                            <span>Download APK</span>
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* ----------------- SECTION: ARCHITECTURE DEEP DIVES ----------------- */}
-            <section
-              id="architecture"
-              className="mb-16 scroll-mt-16 md:mb-24 lg:mb-32 lg:scroll-mt-24"
-              aria-label="Systems Architecture Specification"
-            >
-              <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-[#0b0f17]/85 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
-                <h2 className="text-sm font-bold uppercase tracking-widest text-zinc-200">
-                  Architecture
-                </h2>
-              </div>
-
-              <div className="space-y-6">
-                <div className="p-5 rounded-lg border border-zinc-800 bg-zinc-900/30 space-y-4">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-semibold text-zinc-100 text-sm tracking-tight">
-                      The 8-Layer Enterprise AI Stack (System Specification)
-                    </h3>
-                    <span className="text-[11px] font-mono text-teal-300 px-2 py-0.5 rounded bg-teal-950/60 border border-teal-800/60">
-                      Standardized Pipeline
-                    </span>
-                  </div>
-
-                  <p className="text-xs text-zinc-400 leading-relaxed">
-                    Designed to prevent naive LLM wrapper failure modes: prompt injections, unbounded token costs, unauthorized database mutations, and latency spikes.
-                  </p>
-
-                  <div className="space-y-2 font-mono text-xs text-zinc-300">
-                    <div className="p-2.5 rounded bg-zinc-950/70 border border-zinc-800/80 flex items-start gap-3">
-                      <span className="text-teal-400 font-bold shrink-0">L6</span>
-                      <div>
-                        <strong className="text-zinc-200">Guardrails &amp; Safety:</strong> Input classifier blocks prompt injections; read-only guarantees prevent destructive SQL mutations.
-                      </div>
-                    </div>
-                    <div className="p-2.5 rounded bg-zinc-950/70 border border-zinc-800/80 flex items-start gap-3">
-                      <span className="text-teal-400 font-bold shrink-0">L7</span>
-                      <div>
-                        <strong className="text-zinc-200">Semantic Cache &amp; Router:</strong> Vector similarity cache delivers $0 repeated token costs; complexity router cascades between Gemini Flash and DeepSeek.
-                      </div>
-                    </div>
-                    <div className="p-2.5 rounded bg-zinc-950/70 border border-zinc-800/80 flex items-start gap-3">
-                      <span className="text-teal-400 font-bold shrink-0">L5</span>
-                      <div>
-                        <strong className="text-zinc-200">RBAC Identity:</strong> OAuth 2.1 token validation enforces ROLE_ADMIN and propagates authenticated headers downstream.
-                      </div>
-                    </div>
-                    <div className="p-2.5 rounded bg-zinc-950/70 border border-zinc-800/80 flex items-start gap-3">
-                      <span className="text-teal-400 font-bold shrink-0">L4</span>
-                      <div>
-                        <strong className="text-zinc-200">MCP Tool Execution:</strong> Command pattern tool dispatcher executes on internal Spring Boot services (:8080) with zero direct database mutation.
-                      </div>
-                    </div>
-                    <div className="p-2.5 rounded bg-zinc-950/70 border border-zinc-800/80 flex items-start gap-3">
-                      <span className="text-teal-400 font-bold shrink-0">L8</span>
-                      <div>
-                        <strong className="text-zinc-200">Observability &amp; Tracing:</strong> OpenTelemetry spans record latency breakdown from router to model generation.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="p-5 rounded-lg border border-zinc-800 bg-zinc-900/30 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-semibold text-zinc-100 text-sm tracking-tight">
-                      Server-Driven UI (`platform-sdui-core`)
-                    </h3>
-                    <span className="text-[11px] font-mono text-zinc-400 px-2 py-0.5 rounded bg-zinc-800">
-                      Cross-Platform
-                    </span>
-                  </div>
-                  <p className="text-xs text-zinc-400 leading-relaxed">
-                    Decouples screen layout from mobile app releases. The Spring Boot backend emits validated JSON component trees that are hydrated identically across React Native and React 19 web clients.
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* ----------------- SECTION: ANDROID APK HUB ----------------- */}
-            <section
-              id="apks"
-              className="mb-16 scroll-mt-16 md:mb-24 lg:mb-32 lg:scroll-mt-24"
-              aria-label="UsageDataTrack Android APK releases"
-            >
-              <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-[#0b0f17]/85 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
-                <h2 className="text-sm font-bold uppercase tracking-widest text-zinc-200">
-                  Android APKs
-                </h2>
-              </div>
-
-              <div className="space-y-4">
-                <p className="text-xs text-zinc-400 leading-relaxed">
-                  Direct release builds for <strong className="text-zinc-200">UsageDataTrack</strong>: an Android OS utility utilizing the <code className="text-teal-300 font-mono">VpnService</code> API for granular per-app internet cutoff and WorkManager silent background auto-updates.
-                </p>
-
-                <div className="rounded-lg border border-zinc-800 overflow-hidden">
-                  <table className="w-full text-left text-xs font-mono">
-                    <thead className="bg-zinc-900/60 text-zinc-400 text-[11px] border-b border-zinc-800">
-                      <tr>
-                        <th className="py-2.5 px-4 font-semibold">Version</th>
-                        <th className="py-2.5 px-4 font-semibold">Date</th>
-                        <th className="py-2.5 px-4 font-semibold hidden sm:table-cell">Notes</th>
-                        <th className="py-2.5 px-4 font-semibold text-right">Binary</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-zinc-800/60 text-zinc-300">
-                      {PORTFOLIO_CONTENT.apks.map((apk) => (
-                        <tr key={apk.version} className="hover:bg-zinc-800/20 transition-colors">
-                          <td className="py-3 px-4 font-bold text-zinc-100">
-                            {apk.version}
-                          </td>
-                          <td className="py-3 px-4 text-zinc-400">
-                            {apk.date}
-                          </td>
-                          <td className="py-3 px-4 text-zinc-400 font-sans text-xs hidden sm:table-cell">
-                            {apk.highlights}
-                          </td>
-                          <td className="py-3 px-4 text-right">
-                            <a
-                              href={apk.downloadUrl}
-                              download
-                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-zinc-800 hover:bg-zinc-700 text-teal-300 hover:text-teal-200 transition-colors text-[11px]"
-                            >
-                              <DownloadIcon className="w-3 h-3" />
-                              <span>{apk.fileSize}</span>
-                            </a>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </section>
-
-            {/* ----------------- SECTION: SKILLS ----------------- */}
-            <section
-              id="skills"
-              className="mb-16 scroll-mt-16 md:mb-24 lg:mb-32 lg:scroll-mt-24"
-              aria-label="Technical skills"
-            >
-              <div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-[#0b0f17]/85 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0">
-                <h2 className="text-sm font-bold uppercase tracking-widest text-zinc-200">
-                  Skills
-                </h2>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {PORTFOLIO_CONTENT.skills.map((group) => (
-                  <div key={group.category} className="p-4 rounded-lg border border-zinc-800/80 bg-zinc-900/20 space-y-2.5">
-                    <h3 className="text-xs font-mono font-semibold uppercase tracking-wider text-zinc-300">
-                      {group.category}
-                    </h3>
-                    <ul className="flex flex-wrap gap-1.5">
-                      {group.items.map((item) => (
-                        <li
-                          key={item}
-                          className="text-[11px] font-mono bg-zinc-800/50 text-zinc-300 border border-zinc-700/60 px-2 py-0.5 rounded"
-                        >
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* ----------------- COLOPHON FOOTER ----------------- */}
-            <footer className="max-w-md pb-16 text-xs text-zinc-500 sm:pb-0 font-mono leading-relaxed">
-              <p>
-                Crafted by <strong className="text-zinc-400 font-medium">Sonu Kumar Jha</strong>. Built with{' '}
-                <a href="https://react.dev" target="_blank" rel="noreferrer noopener" className="text-zinc-400 hover:text-teal-300">React</a>,{' '}
-                <a href="https://www.typescriptlang.org" target="_blank" rel="noreferrer noopener" className="text-zinc-400 hover:text-teal-300">TypeScript</a>, and{' '}
-                <a href="https://tailwindcss.com" target="_blank" rel="noreferrer noopener" className="text-zinc-400 hover:text-teal-300">Tailwind CSS</a>. Deployed to GitHub Pages on custom domain{' '}
-                <span className="text-zinc-300">sonujha.in</span>.
-              </p>
-            </footer>
-
-          </main>
+              <FileTextIcon className="w-3.5 h-3.5" />
+              <span>Résumé</span>
+              <ExternalLinkIcon className="w-3 h-3 opacity-70" />
+            </a>
+          </div>
         </div>
-      </div>
+      </nav>
+
+      {/* ========================================================
+          2. HERO SECTION (Stripe / Linear High-Impact Product Style)
+         ======================================================== */}
+      <section className="relative pt-32 pb-20 md:pt-44 md:pb-28 overflow-hidden bg-grid-pattern">
+        {/* Ambient Top Glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-gradient-to-b from-cyan-500/15 via-indigo-500/10 to-transparent blur-[120px] pointer-events-none rounded-full" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-8">
+          {/* Eyebrow Badge */}
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.1] text-xs font-mono text-cyan-300 backdrop-blur-md">
+            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+            <span>ENTERPRISE SYSTEMS &bull; MULTI-AGENT AI &bull; SDUI</span>
+          </div>
+
+          {/* Main Headline */}
+          <div className="max-w-4xl mx-auto space-y-4">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white leading-[1.08]">
+              Architecting <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-400">Autonomous AI</span> &amp; Distributed Systems.
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed">
+              Hi, I'm <strong className="text-white font-semibold">Sonu Kumar Jha</strong>. Systems architect &amp; senior engineer. I design the 8-Layer Enterprise AI Stack, Server-Driven UI platforms, and native Android OS network firewalls.
+            </p>
+          </div>
+
+          {/* CTAs */}
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
+            <a
+              href="#systems"
+              className="flex items-center gap-2 bg-gradient-to-r from-cyan-500 via-sky-500 to-indigo-600 hover:from-cyan-400 hover:to-indigo-500 text-black font-semibold text-sm px-6 py-3 rounded-xl shadow-lg shadow-cyan-500/20 transition-all hover:scale-[1.02]"
+            >
+              <span>Explore Flagship Systems</span>
+              <ExternalLinkIcon className="w-4 h-4" />
+            </a>
+
+            <button
+              onClick={handleCopyEmail}
+              className="flex items-center gap-2 bg-zinc-900/90 hover:bg-zinc-800 text-zinc-200 border border-white/[0.1] font-mono text-xs px-5 py-3 rounded-xl transition-colors"
+            >
+              <MailIcon className="w-4 h-4 text-cyan-400" />
+              <span>{emailCopied ? "Email Copied!" : PORTFOLIO_DATA.profile.email}</span>
+            </button>
+          </div>
+
+          {/* Metrics Row */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto pt-10 border-t border-white/[0.08]">
+            {PORTFOLIO_DATA.metrics.map((metric, idx) => (
+              <div key={idx} className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] text-left">
+                <div className="text-2xl sm:text-3xl font-extrabold text-white font-mono tracking-tight">
+                  {metric.value}
+                </div>
+                <div className="text-xs text-zinc-500 mt-1 font-medium">
+                  {metric.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================
+          3. INTERACTIVE PRODUCT STAGE (Linear / Stripe Tabbed Showcase)
+         ======================================================== */}
+      <section id="systems" className="py-24 relative border-t border-white/[0.08]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
+            <div className="text-xs font-mono font-bold uppercase tracking-widest text-cyan-400">
+              FLAGSHIP PLATFORMS
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white">
+              Built for Scale &amp; Determinism
+            </h2>
+            <p className="text-zinc-400 text-sm sm:text-base">
+              Explore the architectural foundations, live schemas, and engineering implementations of my core platforms.
+            </p>
+          </div>
+
+          {/* Product Selector Switcher (Linear Style) */}
+          <div className="flex items-center justify-start sm:justify-center overflow-x-auto gap-2 p-1.5 bg-zinc-900/80 rounded-2xl border border-white/[0.08] max-w-3xl mx-auto mb-10 backdrop-blur-md">
+            {PORTFOLIO_DATA.products.map((product) => (
+              <button
+                key={product.id}
+                onClick={() => {
+                  setActiveProductTab(product.id);
+                  setCodeOrImageTab('visual');
+                }}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-mono font-medium transition-all shrink-0 ${
+                  activeProductTab === product.id
+                    ? 'bg-white text-black font-bold shadow-lg shadow-white/10'
+                    : 'text-zinc-400 hover:text-white hover:bg-white/[0.04]'
+                }`}
+              >
+                <span>{product.name}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Active Product Stage Card */}
+          <div className="glow-card rounded-3xl p-6 sm:p-10 border border-white/[0.08] overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+              
+              {/* Left Column: Product Deep Dive */}
+              <div className="lg:col-span-6 space-y-6 text-left">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-800/60">
+                      {activeProduct.badge}
+                    </span>
+                    <span className="text-xs font-mono text-zinc-500">
+                      {activeProduct.period} &bull; {activeProduct.role}
+                    </span>
+                  </div>
+
+                  <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                    {activeProduct.headline}
+                  </h3>
+
+                  <p className="text-sm text-zinc-400 leading-relaxed">
+                    {activeProduct.subhead}
+                  </p>
+                </div>
+
+                {/* Key Metrics */}
+                <div className="grid grid-cols-3 gap-3 p-3.5 rounded-xl bg-zinc-950/80 border border-white/[0.06]">
+                  {activeProduct.stats.map((stat, idx) => (
+                    <div key={idx} className="space-y-0.5">
+                      <div className="text-lg font-bold text-white font-mono">{stat.value}</div>
+                      <div className="text-[10px] text-zinc-500 uppercase tracking-wider">{stat.label}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Architectural Features */}
+                <div className="space-y-3 pt-2">
+                  <div className="text-xs font-mono font-bold uppercase tracking-wider text-zinc-400">
+                    Architectural Guarantees
+                  </div>
+                  <div className="grid grid-cols-1 gap-2.5">
+                    {activeProduct.features.map((feat, idx) => (
+                      <div key={idx} className="p-3 rounded-lg bg-zinc-900/40 border border-white/[0.05] space-y-1">
+                        <div className="text-xs font-bold text-zinc-200 flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                          <span>{feat.title}</span>
+                        </div>
+                        <div className="text-xs text-zinc-400 leading-relaxed pl-3.5">
+                          {feat.desc}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Tech Badges & Links */}
+                <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-white/[0.08]">
+                  <div className="flex flex-wrap gap-1.5">
+                    {activeProduct.techStack.map((tech) => (
+                      <span key={tech} className="text-[11px] font-mono bg-zinc-900 text-zinc-400 border border-white/[0.06] px-2.5 py-0.5 rounded">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    {activeProduct.githubUrl && (
+                      <a
+                        href={activeProduct.githubUrl}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-zinc-300 hover:text-white px-3 py-1.5 rounded-lg bg-zinc-800/80 hover:bg-zinc-700 transition-colors"
+                      >
+                        <GithubIcon className="w-3.5 h-3.5" />
+                        <span>Source</span>
+                      </a>
+                    )}
+                    {activeProduct.apkDownloadUrl && (
+                      <a
+                        href={activeProduct.apkDownloadUrl}
+                        download
+                        className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-black bg-cyan-400 hover:bg-cyan-300 px-3.5 py-1.5 rounded-lg transition-colors"
+                      >
+                        <DownloadIcon className="w-3.5 h-3.5" />
+                        <span>Get v1.44 APK</span>
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: High-Res Visual / Code Switcher */}
+              <div className="lg:col-span-6 space-y-3">
+                {/* Switcher Tab Header */}
+                <div className="flex items-center justify-between px-2">
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setCodeOrImageTab('visual')}
+                      className={`text-xs font-mono px-3 py-1 rounded-lg transition-colors ${
+                        codeOrImageTab === 'visual'
+                          ? 'bg-white/[0.1] text-white font-bold'
+                          : 'text-zinc-500 hover:text-zinc-300'
+                      }`}
+                    >
+                      System Architecture Preview
+                    </button>
+                    {activeProduct.codeSnippet && (
+                      <button
+                        onClick={() => setCodeOrImageTab('code')}
+                        className={`text-xs font-mono px-3 py-1 rounded-lg transition-colors ${
+                          codeOrImageTab === 'code'
+                            ? 'bg-white/[0.1] text-white font-bold'
+                            : 'text-zinc-500 hover:text-zinc-300'
+                        }`}
+                      >
+                        {activeProduct.codeSnippet.filename}
+                      </button>
+                    )}
+                  </div>
+                  <span className="text-[11px] font-mono text-zinc-600">STABLE SPEC</span>
+                </div>
+
+                {/* Display Body */}
+                <div className="rounded-2xl border border-white/[0.08] bg-zinc-950/90 overflow-hidden shadow-2xl relative">
+                  {codeOrImageTab === 'visual' && activeProduct.image ? (
+                    <div className="group relative overflow-hidden">
+                      <img
+                        src={activeProduct.image}
+                        alt={activeProduct.name}
+                        className="w-full h-auto max-h-[500px] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                      />
+                      {activeProduct.imageCaption && (
+                        <div className="p-3 bg-zinc-950/90 border-t border-white/[0.08] text-[11px] font-mono text-zinc-400 text-left">
+                          {activeProduct.imageCaption}
+                        </div>
+                      )}
+                    </div>
+                  ) : activeProduct.codeSnippet ? (
+                    <div className="p-5 font-mono text-xs text-left">
+                      <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/[0.06] text-zinc-500 text-[11px]">
+                        <span>{activeProduct.codeSnippet.filename}</span>
+                        <span className="uppercase">{activeProduct.codeSnippet.language}</span>
+                      </div>
+                      <pre className="text-cyan-300 leading-relaxed overflow-x-auto whitespace-pre">
+                        {activeProduct.codeSnippet.code}
+                      </pre>
+                    </div>
+                  ) : (
+                    <div className="p-12 text-center text-xs font-mono text-zinc-500">
+                      Binary Utility &bull; Target Android 14 API
+                    </div>
+                  )}
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================
+          4. THE 8-LAYER ENTERPRISE AI ARCHITECTURE BREAKDOWN
+         ======================================================== */}
+      <section id="architecture" className="py-24 relative bg-grid-pattern border-t border-white/[0.08]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+            <div className="text-xs font-mono font-bold uppercase tracking-widest text-cyan-400">
+              SYSTEM DESIGN SPECIFICATION
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white">
+              The 8-Layer Enterprise AI Stack
+            </h2>
+            <p className="text-zinc-400 text-sm sm:text-base">
+              Hardened architecture standard eliminating naive LLM wrapper vulnerabilities, prompt breaches, and unchecked database pollution.
+            </p>
+          </div>
+
+          {/* 8-Layer Pipeline Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { num: "01", name: "Raw Model Generation", desc: "Pluggable provider adapter streaming chunked Server-Sent Events (SSE) with deterministic JSON schemas." },
+              { num: "02", name: "System Persona Builder", desc: "Strict instruction grounding restricting agent responses to verified internal tool outputs." },
+              { num: "03", name: "RAG & Schema Registry", desc: "Deterministic knowledge base injecting isolated project schemas to prevent parameter hallucination." },
+              { num: "04", name: "MCP Tool Execution", desc: "Command Pattern tool dispatcher executing on Spring Boot (:8080) with zero direct database mutation." },
+              { num: "05", name: "RBAC & Identity", desc: "OAuth 2.1 token enforcement (ROLE_ADMIN) propagating verified internal security claims." },
+              { num: "06", name: "Guardrails & Safety", desc: "Input classifier blocking prompt injection attacks and guaranteeing zero data mutations." },
+              { num: "07", name: "Semantic Vector Cache", desc: "Cosine vector similarity cache resolving repeated queries with $0 token cost and model routing." },
+              { num: "08", name: "Observability & Evals", desc: "OpenTelemetry distributed tracing capturing spans from edge proxy to tool execution." },
+            ].map((layer) => (
+              <div key={layer.num} className="p-6 rounded-2xl bg-zinc-950/80 border border-white/[0.06] hover:border-cyan-500/40 transition-all text-left space-y-3">
+                <div className="text-xs font-mono font-bold text-cyan-400">
+                  LAYER {layer.num}
+                </div>
+                <h4 className="text-base font-bold text-white tracking-tight">
+                  {layer.name}
+                </h4>
+                <p className="text-xs text-zinc-400 leading-relaxed">
+                  {layer.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================
+          5. ANDROID RELEASES HUB (UsageDataTrack)
+         ======================================================== */}
+      <section id="apks" className="py-24 relative border-t border-white/[0.08]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+            <div className="text-xs font-mono font-bold uppercase tracking-widest text-purple-400">
+              NATIVE ANDROID UTILITY
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white">
+              UsageDataTrack Release Station
+            </h2>
+            <p className="text-zinc-400 text-sm sm:text-base">
+              Custom VpnService packet firewall, QUIC UDP 443 termination, and WorkManager background auto-updater.
+            </p>
+          </div>
+
+          <div className="rounded-2xl border border-white/[0.08] bg-zinc-950/60 overflow-hidden shadow-2xl">
+            <div className="p-5 border-b border-white/[0.08] flex items-center justify-between">
+              <div className="flex items-center gap-2 text-xs font-mono text-zinc-300">
+                <span className="w-2 h-2 rounded-full bg-purple-400" />
+                <span>Production Builds (v1.11 &ndash; v1.44)</span>
+              </div>
+              <span className="text-xs font-mono text-zinc-500">Target SDK 34 (Android 14)</span>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs font-mono">
+                <thead className="bg-zinc-900/80 text-zinc-400 uppercase text-[11px] border-b border-white/[0.06]">
+                  <tr>
+                    <th className="py-3.5 px-6 font-semibold">Build</th>
+                    <th className="py-3.5 px-6 font-semibold">Date</th>
+                    <th className="py-3.5 px-6 font-semibold">Changelog &amp; Architecture Notes</th>
+                    <th className="py-3.5 px-6 font-semibold">Size</th>
+                    <th className="py-3.5 px-6 font-semibold text-right">Download</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/[0.06] text-zinc-300">
+                  {PORTFOLIO_DATA.apks.map((apk) => (
+                    <tr key={apk.version} className="hover:bg-white/[0.02] transition-colors">
+                      <td className="py-4 px-6 font-bold text-white flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+                        {apk.version}
+                      </td>
+                      <td className="py-4 px-6 text-zinc-400">{apk.date}</td>
+                      <td className="py-4 px-6 text-zinc-300 font-sans text-xs">{apk.highlights}</td>
+                      <td className="py-4 px-6 text-zinc-400">{apk.fileSize}</td>
+                      <td className="py-4 px-6 text-right">
+                        <a
+                          href={apk.downloadUrl}
+                          download
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-purple-300 hover:text-white transition-colors"
+                        >
+                          <DownloadIcon className="w-3.5 h-3.5" />
+                          <span>APK</span>
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================
+          6. WORK EXPERIENCE (Vercel Timeline Style)
+         ======================================================== */}
+      <section id="experience" className="py-24 relative bg-grid-pattern border-t border-white/[0.08]">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+            <div className="text-xs font-mono font-bold uppercase tracking-widest text-cyan-400">
+              TRACK RECORD
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white">
+              Engineering Experience
+            </h2>
+          </div>
+
+          <div className="space-y-8">
+            {PORTFOLIO_DATA.experiences.map((exp, idx) => (
+              <div key={idx} className="p-8 rounded-2xl bg-zinc-950/70 border border-white/[0.08] space-y-4 text-left">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/[0.06] pb-4">
+                  <div>
+                    <h3 className="text-xl font-bold text-white tracking-tight">{exp.role}</h3>
+                    <div className="text-sm font-semibold text-cyan-400">{exp.company} &bull; <span className="text-zinc-500 font-normal">{exp.location}</span></div>
+                  </div>
+                  <div className="text-xs font-mono font-bold text-zinc-400 bg-white/[0.04] px-3 py-1 rounded-full border border-white/[0.08] self-start sm:self-auto">
+                    {exp.period}
+                  </div>
+                </div>
+
+                <p className="text-xs text-zinc-300 leading-relaxed font-mono">
+                  {exp.summary}
+                </p>
+
+                <ul className="space-y-2 text-xs text-zinc-400">
+                  {exp.bullets.map((bullet, bIdx) => (
+                    <li key={bIdx} className="flex items-start gap-2.5">
+                      <span className="text-cyan-400 shrink-0 select-none">&bull;</span>
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="flex flex-wrap gap-1.5 pt-3">
+                  {exp.techStack.map((tech) => (
+                    <span key={tech} className="text-[11px] font-mono bg-zinc-900 text-zinc-400 px-2.5 py-0.5 rounded border border-white/[0.06]">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================
+          7. SKILLS MATRIX
+         ======================================================== */}
+      <section id="skills" className="py-24 relative border-t border-white/[0.08]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+            <div className="text-xs font-mono font-bold uppercase tracking-widest text-cyan-400">
+              TECHNICAL COMPETENCY
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white">
+              Skills &amp; Technology Stack
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+            {PORTFOLIO_DATA.skills.map((group) => (
+              <div key={group.category} className="p-6 rounded-2xl bg-zinc-950/60 border border-white/[0.08] space-y-3">
+                <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-cyan-400">
+                  {group.category}
+                </h4>
+                <div className="flex flex-wrap gap-1.5">
+                  {group.items.map((item) => (
+                    <span key={item} className="text-xs font-mono bg-white/[0.03] text-zinc-300 border border-white/[0.06] px-2.5 py-1 rounded">
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================
+          8. CONTACT & FOOTER (Stripe / Linear Banner)
+         ======================================================== */}
+      <footer className="py-20 relative bg-[#020307] border-t border-white/[0.08]">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
+          <div className="space-y-4">
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+              Let's engineer scalable systems.
+            </h2>
+            <p className="text-zinc-400 text-sm sm:text-base max-w-xl mx-auto">
+              Open to senior systems engineering roles, distributed platform architecture, and specialized AI systems consulting.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <a
+              href={`mailto:${PORTFOLIO_DATA.profile.email}`}
+              className="flex items-center gap-2 bg-white hover:bg-zinc-200 text-black font-bold text-sm px-6 py-3 rounded-xl transition-all hover:scale-[1.02]"
+            >
+              <MailIcon className="w-4 h-4" />
+              <span>Send Direct Email</span>
+            </a>
+
+            <button
+              onClick={handleCopyEmail}
+              className="flex items-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-white/[0.1] font-mono text-xs px-5 py-3 rounded-xl transition-colors"
+            >
+              <span>{emailCopied ? "Email Copied!" : PORTFOLIO_DATA.profile.email}</span>
+            </button>
+          </div>
+
+          <div className="flex items-center justify-center gap-6 pt-6 text-zinc-500 text-xs font-mono">
+            <a href={PORTFOLIO_DATA.profile.github} target="_blank" rel="noreferrer noopener" className="hover:text-white transition-colors">
+              GitHub
+            </a>
+            <a href={PORTFOLIO_DATA.profile.linkedin} target="_blank" rel="noreferrer noopener" className="hover:text-white transition-colors">
+              LinkedIn
+            </a>
+            <a href={PORTFOLIO_DATA.profile.resumeUrl} target="_blank" rel="noreferrer noopener" className="hover:text-white transition-colors">
+              Résumé
+            </a>
+          </div>
+
+          <div className="text-[11px] font-mono text-zinc-600 pt-6 border-t border-white/[0.04]">
+            &copy; {new Date().getFullYear()} Sonu Kumar Jha &bull; Deployed on custom domain <span className="text-zinc-400">sonujha.in</span>
+          </div>
+        </div>
+      </footer>
+
     </div>
   );
 };
