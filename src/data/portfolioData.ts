@@ -41,14 +41,14 @@ export interface ApkRelease {
 export const PORTFOLIO_DATA = {
   profile: {
     name: "Sonu Kumar Jha",
-    title: "Systems Architect & Senior Software Engineer",
+    title: "Lead Software Engineer & Systems Architect",
     location: "Noida / Delhi NCR, India (Available Globally)",
     email: "sjha9563@gmail.com",
     github: "https://github.com/Issonujha",
     linkedin: "https://www.linkedin.com/in/sonu-jha-633765167/",
-    resumeUrl: "https://bit.ly/sonuJhaResume2024",
+    resumeUrl: "/resources/Sonu_Kumar_Jha_Resume.pdf",
     avatar: "/resources/images/profile_photo.jpeg",
-    bio: "Systems architect and full-stack engineer with over 1.5+ years of enterprise experience at Actolap Solutions. Specializing in high-concurrency Java/Spring Boot microservices, Server-Driven UI (SDUI) platforms, and production Multi-Agent AI systems with zero-mutation guardrails."
+    bio: "Lead software engineer and systems architect with 3.5+ years of enterprise experience across Kaptune Media and Actolap Solutions. Specializing in Java 17/21, Spring Boot 3 microservices, high-scale fintech payment engines, Server-Driven UI (SDUI), and production Multi-Agent AI systems with zero-mutation guardrails."
   },
 
   metrics: [
@@ -212,18 +212,32 @@ export const PORTFOLIO_DATA = {
 
   experiences: [
     {
-      period: "2023 — Present",
-      role: "Software Developer",
-      company: "Actolap Solutions Pvt. Ltd.",
+      period: "June 2026 — Present",
+      role: "Lead Software Engineer",
+      company: "Kaptune Media India Pvt. Ltd.",
       location: "Noida, India",
-      summary: "Engineer high-throughput enterprise backend microservices, RESTful APIs, and cross-platform integrations across Ad Tech and IoT domains.",
+      summary: "Lead engineering roadmap, sprint planning, and architectural governance for cross-functional pods delivering enterprise B2B SaaS.",
       bullets: [
-        "Architected scalable backend microservices utilizing Spring Boot, Eureka service discovery, and declarative Feign client RPC.",
-        "Implemented stateless JWT role-based access control (RBAC) and OAuth 2.0 token security filters.",
-        "Optimized MySQL query execution plans and indexing, significantly reducing response latencies on heavy reporting queries.",
-        "Collaborated across full-stack initiatives with React and TypeScript, delivering robust user interfaces integrated with backend microservices."
+        "Direct technical architecture and roadmap for a team of 6+ developers, ensuring 100% on-time milestone delivery.",
+        "Spearhead core microservice migration to Java 17/21 and Spring Boot 3 with virtual threads, boosting throughput by 25%.",
+        "Enforce automated CI/CD pipelines, strict code reviews, and test coverage standards, reducing production bugs by 30%."
       ],
-      techStack: ["Java 17", "Spring Boot", "Microservices", "Eureka", "Feign", "Hystrix", "MySQL", "Redis", "React", "TypeScript", "Docker"]
+      techStack: ["Java 21", "Spring Boot 3", "Microservices", "Docker", "Kubernetes", "AWS", "CI/CD", "PostgreSQL", "Kafka"]
+    },
+    {
+      period: "June 2023 — May 2026",
+      role: "Software Developer & Team Lead",
+      company: "Actolap Solutions India Pvt. Ltd.",
+      location: "Noida, India",
+      summary: "Architected high-throughput enterprise backend microservices and payment gateways for Trackwick (Enterprise Field Operations Platform).",
+      bullets: [
+        "Architected scalable backend microservices for Trackwick sustaining high-volume daily enterprise transactions.",
+        "Designed and launched ICICI Bank Dynamic QR Payment Gateway with asynchronous webhooks and instant ledger reconciliation (99.9% uptime).",
+        "Engineered bidirectional connectors for Salesforce CRM, Zoho CRM, and Odoo ERP, saving 40+ operational hours weekly.",
+        "Implemented multi-tier Redis caching and MySQL composite indexing, slashing p95 API response times by 45%.",
+        "Automated secure enterprise document and email pipelines via Microsoft Graph API & OneDrive with role-based access control (RBAC)."
+      ],
+      techStack: ["Java 17", "Spring Boot", "Microservices", "Redis", "MySQL", "ICICI Bank API", "Salesforce API", "Odoo ERP", "Docker", "JUnit 5"]
     },
     {
       period: "2024 — Present",
@@ -237,6 +251,18 @@ export const PORTFOLIO_DATA = {
         "Developed UsageDataTrack (v1.11–v1.44), an Android system utility with hardware VPN packet inspection and WorkManager auto-updates."
       ],
       techStack: ["Multi-Agent AI", "SDUI", "React Native", "Spring Boot 3.3", "Android VpnService", "Redis"]
+    },
+    {
+      period: "August 2022 — December 2022",
+      role: "Teaching Assistant (Internship)",
+      company: "Coding Ninjas",
+      location: "Remote",
+      summary: "Mentored 200+ students in Java, Object-Oriented Programming (OOP), and Data Structures & Algorithms (DSA).",
+      bullets: [
+        "Conducted 1,000+ live debugging sessions and code reviews with a 95%+ student satisfaction rating.",
+        "Guided students on algorithmic complexity optimization, memory efficiency, and coding best practices."
+      ],
+      techStack: ["Java", "Data Structures", "Algorithms", "OOP", "Debugging"]
     }
   ] as ExperienceItem[],
 
